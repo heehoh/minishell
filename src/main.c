@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/02/23 12:29:56 by migo             ###   ########.fr       */
+/*   Updated: 2023/02/24 12:56:43 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 // 0 
 // 1 > 2 >> 3 < 4 <<
 
-typedef struct cmd
+typedef struct s_cmd
 {
 	char	*file;
 	int		redirection;
 	char	**option; 
-} cmd;
+}	t_cmd;
 
 typedef struct set
 {
@@ -45,8 +45,10 @@ int	main(int argc, char **argv, char **env)
 			return (0);
 		}
 		add_history(str);
-		//명령어 파싱.
+		//명령어 파싱. 
 		//명령어 실행. + builtin 
 		free(str);
 	}
 }
+
+/* ㅅㅣㄹ해ㅇ;
