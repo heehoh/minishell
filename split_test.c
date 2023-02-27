@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:17:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/02/24 14:36:56 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/02/26 16:52:13 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		return (0);
 
-	strs = ft_split(argv[1], ' ');
+	strs = ft_split(argv[1], '|');
 	i = 0;
 	while (strs[i])
 	{

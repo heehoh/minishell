@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_set.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:04:25 by migo              #+#    #+#             */
-/*   Updated: 2023/02/24 17:14:15 by migo             ###   ########.fr       */
+/*   Updated: 2023/02/26 20:23:38 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ char	**ft_split(char const *str, char charset, int a);
 
 void	num_quote(char *str)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -44,9 +44,9 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int count(t_list *env)
+int	count(t_list *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env->env[i] != '=')
@@ -57,20 +57,17 @@ int count(t_list *env)
 int	num_env_word(char *str, t_list *env)
 {
 	int	i;
-	int	j;
 
 	while (1)
 	{
 		i = 0;
-		j = 0;
 		while (str[i] != ' ' && str[i])
 		{
-			if (str[i] != env->env[j])
+			if (str[i] != env->env[i])
 				break ;
 			i++;
-			j++;
 		}
-		if (env->env[j] == '=' && (str[i] == ' ' || str[i] == '\0'))
+		if (env->env[i] == '=' && (str[i] == ' ' || str[i] == '\0'))
 			return (count(env) - i - 1);
 		if (env->next == NULL)
 			break ;
@@ -80,7 +77,6 @@ int	num_env_word(char *str, t_list *env)
 		i++;
 	return (-i - 1);
 }
-
 
 char	*quote(char *str, t_list *env)
 {
@@ -111,7 +107,7 @@ char	*quote(char *str, t_list *env)
     return (src);
 }
 
-t_cmd *make_cmd(char *str, char **env)
+t_cmd *make_cmd_set(char *str, char **env)
 {
 	t_cmd *cmd;
 

@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/02/27 11:53:30 by hujeong          ###   ########.fr       */
+/*   Created: 2023/02/26 12:27:55 by hujeong           #+#    #+#             */
+/*   Updated: 2023/02/26 20:23:36 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "minishell.h"
+#include "../minishell.h"
+#include "../libft/libft.h"
 
-// 0 
-// 1 > 2 >> 3 < 4 <<
-
-int	main(int argc, char **argv, char **env)
+t_cmd	*parse_cmd(char **cmd_set)
 {
-	char	*input;
-	t_cmd	*cmd;
+	t_cmd	*cmd_head;
+	t_cmd	*cmd_node;
+	char	**cmd;
+	int		count;
 
-	//env_list
-	while (1)
+	cmd_head = (t_cmd *)malloc(sizeof(t_cmd));
+	cmd_head->file
+	while (cmd_set[count])
 	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			printf(" exit\n");
-			return (0);
-		}
-		add_history(input);
-		cmd = parsing(input);
-		execution(cmd);
-		free(input);
+
+		++count;
 	}
+}
+
+t_cmd	*parsing(char *input)
+{
+	t_cmd	*cmd;
+	char	**cmd_set;
+	int		count;
+
+	cmd_set = ft_split(input, '|');
+	cmd = parse_cmd(cmd_set)
 }
