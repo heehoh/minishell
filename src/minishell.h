@@ -24,7 +24,7 @@ typedef struct s_env
 
 typedef struct s_file
 {
-	char	*name;
+	char	*file;
 	int		redirection;
 }	t_file;
 
