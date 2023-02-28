@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:26:04 by migo              #+#    #+#             */
-/*   Updated: 2023/02/27 11:53:30 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:57:59 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 # include <stdio.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct s_env
 {
 	char			*env;
-	struct s_list	*next;
-}	t_list;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_file
 {
-	char	*file;
+	char	*name;
 	int		redirection;
 }	t_file;
 
@@ -35,6 +35,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+t_env	*g_global;
 
 #endif
 

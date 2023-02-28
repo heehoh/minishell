@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ss.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:59 by hujeong          ###   ########.fr       */
+/*   Created: 2023/02/28 10:36:36 by hujeong           #+#    #+#             */
+/*   Updated: 2023/02/28 11:45:22 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include "minishell.h"
 
-void	get_env_list(char **env);
-
-int	main(int argc, char **argv, char **env)
+int	main(__attribute__((unused))int argc, __attribute__((unused))char *argv[],
+			char *env[])
 {
-	char	*input;
-	t_cmd	*cmd;
+	int	i;
 
-	get_env_list(env);
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			printf(" exit\n");
-			return (0);
-		}
-		add_history(input);
-		cmd = parsing(input);
-		execution(cmd);
-		free(input);
-	}
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
 }
