@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_test.c                                       :+:      :+:    :+:   */
+/*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/24 14:17:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/02/26 16:52:13 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/01 21:40:52 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../minishell.h"
 
-char	**ft_split(char *str, char c);
-
-int	main(int argc, char *argv[])
+int	flag_quote(char *sep_pipe, int *quote_flag)
 {
-	char	**strs;
-	int		i;
+	int	record;
 
-	if (argc != 2)
-		return (0);
-
-	strs = ft_split(argv[1], '|');
-	i = 0;
-	while (strs[i])
+	record = *quote_flag;
+	if (*sep_pipe == '\'')
 	{
-		printf("%s\n", strs[i]);
-		++i;
+		if (*quote_flag == 0)
+			*quote_flag = 1;
+		else if (*quote_flag == 1)
+			*quote_flag = 0;
 	}
-	printf("%d\n", i);
+	else if (*sep_pipe == '\"')
+	{
+		if (*quote_flag == 0)
+			*quote_flag = 2;
+		else if (*quote_flag == 2)
+			*quote_flag = 0;
+	}
+	if (record != *quote_flag)
+		return (1);
 	return (0);
 }

@@ -5,33 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/03/01 18:36:52 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/01 20:14:47 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/01 21:32:49 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
+#include "./src/minishell.h"
 #include <stdio.h>
-#include "minishell.h"
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*input;
-	t_cmd	*cmd;
+	t_cmd *cmd;
+	int j = 1;
 
+	if (argc != 2)
+		return (0);
 	get_env_list(env);
-	while (1)
+	cmd = parse_input(argv[1]);
+	while (cmd)
 	{
-		input = readline("minishell$ ");
-		if (input == NULL)
+		int i = 0;
+		while (cmd->option[i])
 		{
-			printf(" exit\n");
-			return (0);
+			printf("%d pipe -> option : %s\n",j, cmd->option[i]);
+			i++;
 		}
-		add_history(input);
-		cmd = parsing(input);
-		execution(cmd);
-		free(input);
+		i = 0;
+		while (cmd->file[i].redirection != 0)
+		{
+			printf("redirection : %d\n", cmd->file[i].redirection);
+			printf("file : %s\n", cmd->file[i].name);
+			i++;
+		}
+		cmd = cmd->next;
+		j++;
 	}
+	return (0);
 }

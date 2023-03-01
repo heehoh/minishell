@@ -1,5 +1,6 @@
 NAME = libft.a
 SRCS = ft_atoi.c \
+	   ft_isalnum.c \
 	   ft_split.c \
 	   ft_strdup.c \
 	   ft_strjoin.c \

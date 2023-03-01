@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:44:15 by hujeong           #+#    #+#             */
-/*   Updated: 2023/02/18 17:13:14 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/01 18:04:17 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char *s1, char const *s2);
 char		**ft_split(char const *s, char c);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_isalnum(int c);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100

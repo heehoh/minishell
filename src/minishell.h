@@ -6,25 +6,24 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:26:04 by migo              #+#    #+#             */
-/*   Updated: 2023/02/28 15:57:59 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/01 20:30:00 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include <unistd.h>
 
 typedef struct s_env
 {
-	char			*env;
+	char			*var;
 	struct s_env	*next;
 }	t_env;
 
 typedef struct s_file
 {
-	char	*file;
+	char	*name;
 	int		redirection;
 }	t_file;
 
@@ -35,7 +34,18 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+# define CMD 0
+# define FILE_ 1
+
 t_env	*g_global;
+
+t_cmd	*parse_input(char *str);
+t_file	*parse_file(char *sep_pipe);
+char	**parse_cmd_option(char *sep_pipe);
+void	replace_util(char **str, t_env *env);
+void	get_env_list(char **env);
+void	is_cmd_or_file(char **sep_pipe, int *flag);
+int		flag_quote(char *sep_pipe, int *quote_flag);
 
 #endif
 
