@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 11:21:38 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:10:02 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	num_file(char *sep_pipe)
 	return (count);
 }
 
-void	put_redirection(t_file *file, char *sep_pipe, int quote_flag)
+void	put_redir(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 {
 	int	count;
 
 	count = 0;
-	while (*sep_pipe)
+	while (*sep_pipe && count < fl_num)
 	{
 		file[count].redirection = 0;
 		flag_quote(sep_pipe, &quote_flag);
@@ -71,18 +71,18 @@ void	put_redirection(t_file *file, char *sep_pipe, int quote_flag)
 	}
 }
 
-void	file_count_file(t_file *file, char *sep_pipe, int quote_flag)
+void	fl_word_count(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 {
 	int		word_count;
 	int		is_file;
 	int		i;
 
 	i = 0;
-	while (*sep_pipe)
+	while (*sep_pipe && i < fl_num)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_file);
-		while (*sep_pipe && (*sep_pipe != ' '|| quote_flag)) /*바꿈*/
+		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -90,7 +90,7 @@ void	file_count_file(t_file *file, char *sep_pipe, int quote_flag)
 			word_count++;
 			sep_pipe++;
 		}
-		if (is_file == FILE_ && sep_pipe[-1] != ' ')
+		if (is_file == FILEFLAG)
 		{
 			file[i].name = malloc(sizeof(char) * word_count + 1);
 			if (file[i].name == NULL)
@@ -100,14 +100,14 @@ void	file_count_file(t_file *file, char *sep_pipe, int quote_flag)
 	}
 }
 
-void	put_file(t_file *file, char *sep_pipe, int quote_flag)
+void	put_file(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 {
 	int		file_count;
 	int		is_file;
 	int		i;
 
 	i = 0;
-	while (*sep_pipe)
+	while (*sep_pipe && i < fl_num)
 	{
 		file_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_file);
@@ -121,7 +121,7 @@ void	put_file(t_file *file, char *sep_pipe, int quote_flag)
 			file_count++;
 			sep_pipe++;
 		}
-		if (is_file == FILE_)
+		if (is_file == FILEFLAG)
 		{
 			file[i].name[file_count] = '\0';
 			i++;
@@ -135,13 +135,15 @@ t_file	*parse_file(char *sep_pipe)
 	int		count;
 
 	count = num_file(sep_pipe);
-	file = malloc(sizeof(t_file) * (count + 1)); // file이 0개일 때 처리
+	file = malloc(sizeof(t_file) * (count + 1));
 	if (file == 0)
 		return (0);
 	file[count].name = NULL;
 	file[count].redirection = 0;
-	file_word_count(file, sep_pipe, 0);
-	put_redirection(file, sep_pipe, 0);
-	put_file(file, sep_pipe, 0);
+	if (count == 0)
+		return (file);
+	fl_word_count(file, sep_pipe, 0, count);
+	put_redir(file, sep_pipe, 0, count);
+	put_file(file, sep_pipe, 0, count);
 	return (file);
 }
