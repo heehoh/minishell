@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 10:31:04 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:39:29 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,8 @@ int	flag_quote(char *sep_pipe, int *quote_flag)
 	if (prev_quote_flag != *quote_flag)
 		return (1);
 	return (0);
+}
+
+void	free_sep_pipe(char **sep_pipe)
+{
 }
