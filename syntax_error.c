@@ -6,12 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 19:30:53 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 19:51:04 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "./src/libft/libft.h"
+#include "./src/minishell.h"
 
 int	syntax_quote_error(int quote)
 {
@@ -21,7 +21,8 @@ int	syntax_quote_error(int quote)
 	else
 		write(2,
 			"> minishell: unexpected EOF while looking for matching `\"'\n", 59);
-	write(2, "minishell: syntax error: unexpected end of file\n", 43);
+	write(2,
+		"minishell: syntax error: unexpected end of file\n", 48);
 	return (1);
 }
 
@@ -54,20 +55,21 @@ int	syntax_redir_error(char *input)
 int	syntax_pipe_error(void)
 {
 	write(2,
-		"minishell: syntax error near unexpected token `|'\n", 45);
+		"minishell: syntax error near unexpected token `|'\n", 50);
 	return (1);
 }
 
-int	syntax_pipe_redir_error(char **input, int redir_token)
+int	syntax_pipe_redir_error(char **input)
 {
 	char	redir_token;
 
 	if (**input == '|')
 	{
 		++(*input);
-		while (**input == ' ' || **input == '<' || **input == '>')
+		while (**input && (**input == ' ' || **input == '|'
+				|| **input == '<' || **input == '>'))
 			++(*input);
-		if (*input == '\0')
+		if (**input == '\0')
 			return (syntax_pipe_error());
 	}
 	else if (**input == '<' || **input == '>')
@@ -77,9 +79,12 @@ int	syntax_pipe_redir_error(char **input, int redir_token)
 			++(*input);
 		if (redir_token != **input)
 			return (syntax_redir_error(*input));
-		while (**input == ' ')
+		++(*input);
+		while (**input && (**input) == ' ')
 			++(*input);
-		if (**input == '|' || **input == '<' || **input == '>')
+		if (**input == '|')
+			return (syntax_pipe_error());
+		if (**input == '<' || **input == '>')
 			return (syntax_redir_error(*input));
 		if (**input == '\0')
 			return (syntax_redir_error(*input));
@@ -96,7 +101,7 @@ int	syntax_error(char *input)
 	{
 		flag_quote(input, &quote_flag);
 		if (quote_flag == 0)
-			if (syntax_pipe_redir_error(&input, 0))
+			if (syntax_pipe_redir_error(&input))
 				return (1);
 		++input;
 	}
