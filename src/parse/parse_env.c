@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/01 21:46:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 10:48:27 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ int	put_env_word(char *change, char *str, t_env *env, int *count)
 		i++;
 	return (i + 1);
 }
-
-/*insert_env 에 문제가 있음. flag_quote가 작동을 잘 안함*/
 
 void	insert_env(char *prev, char *str, t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:05:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/01 21:19:36 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:24:01 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	cmd_word_count(char **option, char *sep_pipe, int quote_flag)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_cmd);
-		while (*sep_pipe != ' ' && *sep_pipe || quote_flag)
+		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -77,7 +77,6 @@ void	cmd_word_count(char **option, char *sep_pipe, int quote_flag)
 			option[i] = malloc(sizeof(char) * word_count + 1);
 			if (option[i] == NULL)
 				return ;
-			option[i][word_count] = '\0';
 			i++;
 		}
 	}
@@ -95,7 +94,7 @@ void	put_cmd_option(char **option, char *sep_pipe, int quote_flag)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_cmd);
-		while (*sep_pipe != ' ' && *sep_pipe || quote_flag)
+		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -105,14 +104,13 @@ void	put_cmd_option(char **option, char *sep_pipe, int quote_flag)
 			word_count++;
 			sep_pipe++;
 		}
-		if (is_cmd == CMD)
+		if (is_cmd == CMD && sep_pipe[-1] != ' ')
 		{
-			//option[i][word_count] = '\0';
+			option[i][word_count] = '\0';
 			i++;
 		}
 	}
 }
-
 
 char	**parse_cmd_option(char *sep_pipe)
 {

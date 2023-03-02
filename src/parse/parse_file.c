@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/01 20:29:14 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:21:38 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	num_file(char *sep_pipe)
 				i++;
 			count++;
 		}
-		if (sep_pipe[i] == '>' && quote_flag == 0)
+		else if (sep_pipe[i] == '>' && quote_flag == 0) /*if -> else if*/
 		{
 			if (sep_pipe[i + 1] == '>')
 				i++;
@@ -71,28 +71,28 @@ void	put_redirection(t_file *file, char *sep_pipe, int quote_flag)
 	}
 }
 
-void	count_file(t_file *file, char *sep_pipe, int quote_flag)
+void	file_count_file(t_file *file, char *sep_pipe, int quote_flag)
 {
-	int		file_count;
+	int		word_count;
 	int		is_file;
 	int		i;
 
 	i = 0;
 	while (*sep_pipe)
 	{
-		file_count = 0;
+		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_file);
-		while ((*sep_pipe != ' ' && *sep_pipe) || quote_flag)
+		while (*sep_pipe && (*sep_pipe != ' '|| quote_flag)) /*바꿈*/
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
 				break ;
-			file_count++;
+			word_count++;
 			sep_pipe++;
 		}
 		if (is_file == FILE_ && sep_pipe[-1] != ' ')
 		{
-			file[i].name = malloc(sizeof(char) * file_count + 1);
+			file[i].name = malloc(sizeof(char) * word_count + 1);
 			if (file[i].name == NULL)
 				return ;
 			i++;
@@ -135,12 +135,12 @@ t_file	*parse_file(char *sep_pipe)
 	int		count;
 
 	count = num_file(sep_pipe);
-	file = malloc(sizeof(t_file) * (count + 1));
+	file = malloc(sizeof(t_file) * (count + 1)); // file이 0개일 때 처리
 	if (file == 0)
 		return (0);
 	file[count].name = NULL;
 	file[count].redirection = 0;
-	count_file(file, sep_pipe, 0);
+	file_word_count(file, sep_pipe, 0);
 	put_redirection(file, sep_pipe, 0);
 	put_file(file, sep_pipe, 0);
 	return (file);

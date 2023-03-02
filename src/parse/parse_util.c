@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/01 21:40:52 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 10:31:04 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	flag_quote(char *sep_pipe, int *quote_flag)
 {
-	int	record;
+	int	prev_quote_flag;
 
-	record = *quote_flag;
+	prev_quote_flag = *quote_flag;
 	if (*sep_pipe == '\'')
 	{
 		if (*quote_flag == 0)
@@ -31,7 +31,7 @@ int	flag_quote(char *sep_pipe, int *quote_flag)
 		else if (*quote_flag == 2)
 			*quote_flag = 0;
 	}
-	if (record != *quote_flag)
+	if (prev_quote_flag != *quote_flag)
 		return (1);
 	return (0);
 }

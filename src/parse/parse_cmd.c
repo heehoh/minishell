@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/01 20:37:32 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 11:29:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cmd_lstadd_back(t_cmd *lst, t_cmd *new)
 
 void	replace_env(t_cmd *cmd, t_env *env)
 {
-	int		i;
+	int	i;
 
 	while (cmd)
 	{
@@ -63,3 +63,5 @@ t_cmd	*parse_input(char *str)
 	replace_env(cmd, g_global);
 	return (cmd);
 }
+/*sep_pipe must free*/
+/*malloc error 처리*/
