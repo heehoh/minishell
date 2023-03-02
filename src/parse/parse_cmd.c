@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/02 11:29:16 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:50:42 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,27 @@ void	replace_env(t_cmd *cmd, t_env *env)
 		cmd = cmd->next;
 	}
 }
+
+// void	cmd_clear(t_cmd **cmd)
+// {
+// 	t_cmd	*tmp;
+// 	int		i;
+
+// 	while (*cmd)
+// 	{
+// 		i = 0;
+// 		tmp = (*cmd)->next;
+// 		demin_char((*cmd)->option);
+// 		while ((*cmd)->file[i].redirection)
+// 		{
+// 			free((*cmd)->file[i].name);
+// 			i++;
+// 		}
+// 		free((*cmd)->file);
+// 		free(*cmd);
+// 		*cmd = tmp;
+// 	}
+// }
 
 t_cmd	*parse_input(char *str)
 {

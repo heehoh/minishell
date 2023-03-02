@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 11:39:29 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/02 14:52:07 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,41 @@ int	flag_quote(char *sep_pipe, int *quote_flag)
 	return (0);
 }
 
-void	free_sep_pipe(char **sep_pipe)
-{
-}
+// void	dimen_char(char **str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		free(str[i]);
+// 		i++;
+// 	}
+// 	free (str);
+// }
+
+// void	read_cmd(t_cmd *cmd)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	j = 1;
+// 	while (cmd)
+// 	{
+// 		i = 0;
+// 		while (cmd->option[i])
+// 		{
+// 			printf("%d pipe -> option : %s\n",j, cmd->option[i]);
+// 			i++;
+// 		}
+// 		i = 0;
+// 		while (cmd->file[i].redirection != 0)
+// 		{
+// 			printf("redirection : %d\n", cmd->file[i].redirection);
+// 			printf("file : %s\n", cmd->file[i].name);
+// 			i++;
+// 		}
+// 		cmd = cmd->next;
+// 		++j;
+// 	}
+// }
