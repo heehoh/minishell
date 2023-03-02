@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 11:21:38 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:51:47 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	put_redirection(t_file *file, char *sep_pipe, int quote_flag)
 	}
 }
 
-void	file_count_file(t_file *file, char *sep_pipe, int quote_flag)
+void	file_word_count(t_file *file, char *sep_pipe, int quote_flag)
 {
 	int		word_count;
 	int		is_file;
