@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/03/03 17:27:52 by migo             ###   ########.fr       */
+/*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
+/*   Updated: 2023/03/03 17:27:35 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "minishell.h"
-#include "libft/libft.h"
+#include "../libft/libft.h"
+#include "../minishell.h"
 #include <fcntl.h>
 
 int	rule_cd(char *str)
@@ -105,29 +102,3 @@ void	builtin_cd(t_cmd *cmd)
 		}
 	}
 }
-
-int	main(int argc, char **argv, char **env)
-{
-	char	*input;
-	t_cmd	*cmd;
-	char	path[4096];
-
-	get_env_list(env);
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			printf(" exit\n");
-			return (0);
-		}
-		add_history(input);
-		cmd = parse_input(input);
-		builtin_cd(cmd);
-		getcwd(path, 4096);
-		printf("%s\n", path);
-		free(input);
-	}
-}
-/*널문자만 들어올 경우 main에서 처리"
-cc src/main.c src/parse/* src/env/env.c src/libft/ft_strdup.c src/libft/ft_isalnum.c src/libft/ft_split.c src/libft/ft_strlen.c -lreadline*/

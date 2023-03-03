@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:26:04 by migo              #+#    #+#             */
-/*   Updated: 2023/03/01 20:30:00 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:01:41 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-# define CMD 0
-# define FILE_ 1
+# define CMDFLAG 0
+# define FILEFLAG 1
 
 t_env	*g_global;
 

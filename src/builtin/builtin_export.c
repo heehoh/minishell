@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:23:40 by migo              #+#    #+#             */
-/*   Updated: 2023/03/02 17:16:04 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/03 11:06:04 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ int	same_env(char *str)
 	return (i);
 }
 
+int	change_env(char *str)
+{
+	t_env	*tmp;
+
+	tmp = g_global;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->var, str, same_env(str)) == 0)
+		{
+			free(tmp->var);
+			tmp->var = ft_strdup(str);
+			return (0);
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 int	rule_env(char *str, t_env *env)
 {
 	int i;
@@ -57,13 +75,7 @@ int	rule_env(char *str, t_env *env)
 	{
 		if (str[i] == '=' && ft_isalpha(str[0]))
 		{
-			while (env)
-			{
-				if (ft_strncmp(env->var, str, same_env(str)) == 0)
-					return (0);
-				env = env->next;
-			}
-			return (1);
+			return (change_env(str));
 		}
 		i++;
 	}

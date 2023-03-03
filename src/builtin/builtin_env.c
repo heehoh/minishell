@@ -1,43 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/25 15:26:44 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/03 16:07:42 by migo             ###   ########.fr       */
+/*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
+/*   Updated: 2023/03/03 13:56:41 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../libft/libft.h"
 #include "../minishell.h"
 
-#define PATH_MAX 4096
-
-void	builtin_pwd(void)
+void	builtin_env(t_cmd *cmd)
 {
-	char	*path;
+	t_env	*tmp;
 
-	path = (char *)malloc(sizeof(char) * PATH_MAX);
-	if (path == NULL)
+	tmp = g_global;
+	if (ft_strncmp((cmd->option[0]), "env", ft_strlen(cmd->option[0])) == 0)
 	{
-		perror("pwd error");
-		exit(1);
+		if (cmd->option[1] == NULL)
+		{
+			while (tmp)
+			{
+				printf("%s\n", tmp->var);
+				tmp = tmp->next;
+			}
+		}
 	}
-	if (getcwd(path, PATH_MAX))
-	{
-		write(STDOUT_FILENO, path, ft_strlen(path));
-		write(STDOUT_FILENO, "\n", 1);
-	}
-	else
-		perror("pwd error");
-	free(path);
-}
-
-void	builtin_cd(t_cmd *cmd)
-{
-	if (chdir(cmd->option[1]))
-		perror("cd");
 }
