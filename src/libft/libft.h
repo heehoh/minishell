@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:44:15 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/01 18:04:17 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/04 18:05:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 size_t		ft_strlen(const char *s);
 long long	ft_atoll(const char *str);
+char		*ft_itoa(int n);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char *s1, char const *s2);
 char		**ft_split(char const *s, char c);
