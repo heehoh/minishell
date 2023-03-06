@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:26:04 by migo              #+#    #+#             */
-/*   Updated: 2023/03/03 11:01:41 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/06 16:05:33 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	replace_util(char **str, t_env *env);
 void	get_env_list(char **env);
 void	is_cmd_or_file(char **sep_pipe, int *flag);
 int		flag_quote(char *sep_pipe, int *quote_flag);
+void	consider_wave(t_cmd *cmd);
+void	consider_exit(t_cmd *cmd);
+void	read_cmd(t_cmd *cmd);
 
 #endif
 

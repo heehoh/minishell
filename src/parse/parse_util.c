@@ -6,11 +6,12 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 14:52:07 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/06 16:06:51 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdio.h>
 
 int	flag_quote(char *sep_pipe, int *quote_flag)
 {
@@ -49,28 +50,28 @@ int	flag_quote(char *sep_pipe, int *quote_flag)
 // 	free (str);
 // }
 
-// void	read_cmd(t_cmd *cmd)
-// {
-// 	int	i;
-// 	int	j;
+void	read_cmd(t_cmd *cmd)
+{
+	int	i;
+	int	j;
 
-// 	j = 1;
-// 	while (cmd)
-// 	{
-// 		i = 0;
-// 		while (cmd->option[i])
-// 		{
-// 			printf("%d pipe -> option : %s\n",j, cmd->option[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 		while (cmd->file[i].redirection != 0)
-// 		{
-// 			printf("redirection : %d\n", cmd->file[i].redirection);
-// 			printf("file : %s\n", cmd->file[i].name);
-// 			i++;
-// 		}
-// 		cmd = cmd->next;
-// 		++j;
-// 	}
-// }
+	j = 1;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->option[i])
+		{
+			printf("%d pipe -> option : %s\n",j, cmd->option[i]);
+			i++;
+		}
+		i = 0;
+		while (cmd->file[i].redirection != 0)
+		{
+			printf("redirection : %d\n", cmd->file[i].redirection);
+			printf("file : %s\n", cmd->file[i].name);
+			i++;
+		}
+		cmd = cmd->next;
+		++j;
+	}
+}

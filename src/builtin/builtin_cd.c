@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/03 17:27:35 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/06 16:19:15 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 int	rule_cd(char *str)
 {
-	int fd;
-	int i;
-	char path[4096];
+	int		fd;
+	int		i;
+	char	path[4096];
 
 	if (getcwd(path, 4096) == NULL)
 		return (0);
@@ -63,22 +63,16 @@ void	cd_option(char *str)
 	path[i] = '/';
 	i++;
 	while (str[j])
-	{
-		path[i] = str[j];
-		i++;
-		j++;
-	}
+		path[i++] = str[j++];
 	path[i] = str[j];
 	if (chdir(path) < 0)
 		printf("cd: %s: Not a directory\n", str);
 }
 
-void	builtin_cd(t_cmd *cmd)
+void	builtin_cd(t_cmd *cmd, t_env *tmp)
 {
-	t_env	*tmp;
 	char	*str;
 
-	tmp = g_global;
 	if (ft_strncmp((cmd->option[0]), "cd", ft_strlen(cmd->option[0])) == 0)
 	{
 		if (cmd->option[1] != NULL)

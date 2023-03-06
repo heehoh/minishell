@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/03/03 17:27:52 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/06 16:44:02 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(input);
 		cmd = parse_input(input);
+		read_cmd(cmd);
 		builtin_cd(cmd);
 		getcwd(path, 4096);
 		printf("%s\n", path);
