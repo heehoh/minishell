@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 15:14:19 by hujeong           #+#    #+#             */
-/*   Updated: 2023/02/24 16:11:14 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/06 16:48:31 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static char	*strjoin_utils(char *s1, char const *s2, size_t *len1, size_t *len2)
 {
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
 	*len1 = ft_strlen(s1);
 	*len2 = ft_strlen(s2);
 	return ((char *)malloc(*len1 + *len2 + 1));
