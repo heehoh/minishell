@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 19:58:35 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/07 20:20:22 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../minishell.h"
+#include <stdio.h>
+#include "../../libft/libft.h"
 
-int	builtin_env(t_cmd *cmd, t_env *tmp)
+#define PATH_MAX 4096
+
+int	builtin_pwd(void)
 {
-	int	i;
+	char	*path;
 
-	if (cmd->option[1] == NULL)
+	path = (char *)malloc(sizeof(char) * PATH_MAX);
+	if (path == NULL)
 	{
-		i = 0;
-		while (tmp)
-		{
-			while (tmp->var[i])
-			{
-				if (tmp->var[i] == '=')
-					break ;
-				i++;
-			}
-			if (tmp->var[i] != '=')
-				printf("%s\n", tmp->var);
-			tmp = tmp->next;
-		}
-		return (0);
+		perror("pwd error");
+		exit(1);
+	}
+	if (getcwd(path, PATH_MAX))
+	{
+		write(STDOUT_FILENO, path, ft_strlen(path));
+		write(STDOUT_FILENO, "\n", 1);
 	}
 	else
-	{
-		printf("env with no options or arguments");
-		return (1);
-	}
+		perror("pwd error");
+	free(path);
+	return (0);
 }

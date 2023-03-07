@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 11:49:17 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 20:15:48 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
 
@@ -96,3 +96,5 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp)
 		return (0);
 	}
 }
+
+// cd 에서 $PWD $OLDPWD 를 바꾸어 주어야함

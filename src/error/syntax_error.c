@@ -6,23 +6,14 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 12:36:40 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:27:33 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "../../libft/libft.h"
 #include "../minishell.h"
-
-#define SYNEND "minishell: syntax error: unexpected end of file\n"
-#define SYNSING "minishell: unexpected EOF while looking for matching `''\n"
-#define SYNDOUB "minishell: unexpected EOF while looking for matching `\"'\n"
-#define SYNNEWL "minishell: syntax error near unexpected token `newline'\n"
-#define SYNHERD "minishell: syntax error near unexpected token `<<'\n"
-#define SYNIN "minishell: syntax error near unexpected token `<'\n"
-#define SYNAPP "minishell: syntax error near unexpected token `>>'\n"
-#define SYNOUT "minishell: syntax error near unexpected token `>'\n"
-#define SYNPIP "minishell: syntax error near unexpected token `|'\n"
+#include "../error.h"
 
 int	is_redir(char c)
 {

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 13:10:02 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 20:23:20 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	num_file(char *sep_pipe)
 				i++;
 			count++;
 		}
-		else if (sep_pipe[i] == '>' && quote_flag == 0) /*if -> else if*/
+		else if (sep_pipe[i] == '>' && quote_flag == 0)
 		{
 			if (sep_pipe[i + 1] == '>')
 				i++;

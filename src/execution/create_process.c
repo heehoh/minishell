@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 10:50:09 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:56:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../process.h"
-
 
 void	set_process(t_process *process, t_cmd *cmd, t_env *env)
 {
@@ -68,20 +67,15 @@ void	create_process_util(t_process *process, int *fd, int i)
 	}
 }
 
-int	create_process(t_cmd *cmd, t_env *env)
+int	create_process_loop(t_process *process)
 {
-	t_process	process;
-	pid_t		*pid;
-	int			*fd;
-	int			i;
+	pid_t	*pid;
+	int		*fd;
+	int		i;
 
-	here_doc_file(cmd, env);
-	set_process(&process, cmd, env);
-	if (process.count == 1 && is_builtin(cmd->option[0]))
-		return (builtin_process(cmd, env));
-	set_pid_pipe(&pid, &fd, process.count);
-	i = -1;
-	while (++i < process.count)
+	set_pid_pipe(&pid, &fd, process->count);
+	i = 0;
+	while (i < process->count)
 	{
 		pid[i] = fork();
 		if (pid[i] < 0)
@@ -91,8 +85,21 @@ int	create_process(t_cmd *cmd, t_env *env)
 			error_fork();
 		}
 		else if (pid[i] == 0)
-			create_process_util(&process, fd, i);
-		process.cmd = process.cmd->next;
+			create_process_util(process, fd, i);
+		process->cmd = process->cmd->next;
+		++i;
 	}
-	return (wait_process(i, pid[i - 1]));
+	close_pipe(fd, process->count, STDIN_FILENO, STDOUT_FILENO);
+	return (wait_process(process->count, pid[i - 1]));
+}
+
+int	create_process(t_cmd *cmd, t_env *env)
+{
+	t_process	process;
+
+	here_doc_file(cmd, env);
+	set_process(&process, cmd, env);
+	if (process.count == 1 && is_builtin(cmd->option[0]))
+		return (execute_parent_process(&process, STDIN_FILENO, STDOUT_FILENO));
+	return (create_process_loop(&process));
 }

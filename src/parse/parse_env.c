@@ -6,17 +6,50 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 10:48:27 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 20:52:45 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+//int	num_env_exit(void)
+//{
+//	int		len;
+//	char	*num;
+
+//	num = ft_itoa(g_status);
+//	if (num == NULL)
+//		malloc_error();
+//	len = ft_strlen(num);
+//	free(num);
+//	return (len + 1);
+//}
+
+//int	put_env_exit(char *change, int *count)
+//{
+//	int		i;
+//	char	*num;
+
+//	num = ft_itoa(g_status);
+//	i = 0;
+//	while (num[i])
+//	{
+//		change[*count] = num[i];
+//		++(*count);
+//		++i;
+//	}
+//	free(num);
+//	return (i + 1);
+//}
+
 int	num_env_word(char *str, t_env *env, int *count)
 {
-	int	i;
+	int		i;
+	char	*num;
 
+	if (*str == '?')
+		return (num_env_exit());
 	while (env)
 	{
 		i = 0;
@@ -55,8 +88,11 @@ int	cnt_env(char *str, t_env *env)
 
 int	put_env_word(char *change, char *str, t_env *env, int *count)
 {
-	int	i;
+	int		i;
+	char	*num;
 
+	if (*str == '?')
+		return (put_env_exit(change, count));
 	while (env)
 	{
 		i = 0;

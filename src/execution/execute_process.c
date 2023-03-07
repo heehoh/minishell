@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 12:46:56 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 20:53:07 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ void	open_file(t_cmd *cmd, int *read_fd, int *write_fd)
 	}
 }
 
+int	execute_parent_process(t_process *process, int read_fd, int write_fd)
+{
+	int	status;
+
+	open_file(process->cmd, &read_fd, &write_fd);
+	status = builtin_process(process->cmd, process->env);
+	if (read_fd != STDIN_FILENO)
+		close(read_fd);
+	if (write_fd != STDOUT_FILENO)
+		close(write_fd);
+	return (status);
+}
+
 void	execute_process(t_process *process, int read_fd, int write_fd)
 {
 	char	*command;
@@ -76,5 +89,3 @@ void	execute_process(t_process *process, int read_fd, int write_fd)
 	command = get_command(process->cmd->option[0], process->env);
 	execve(command, process->cmd->option, NULL);
 }
-
-// redirection == 1 name unlink
