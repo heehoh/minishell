@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 16:19:12 by migo             ###   ########.fr       */
+/*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
+/*   Updated: 2023/03/07 17:44:50 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
+#include <stdlib.h>
 
-int	builtin_env(t_cmd *cmd, t_env *tmp)
+void	builtin_exit(t_cmd *cmd)
 {
-	int	i;
-
-	if (cmd->option[1] == NULL)
+	printf("exit");
+	if (cmd->option[1] != NULL)
+		exit(0);
+	if (ft_atoll(cmd->option[1]) > 2147483647
+		|| ft_atoll(cmd->option[1] < -2147483648))
 	{
-		i = 0;
-		while (tmp)
-		{
-			while (tmp->var[i])
-			{
-				if (tmp->var[i] == '=')
-					break ;
-				i++;
-			}
-			if (tmp->var[i] != '=')
-				printf("%s\n", tmp->var);
-			tmp = tmp->next;
-		}
-		return (0);
+		printf("exit: %s: numeric argument required\n", cmd->option[1]);
+		exit(1);
 	}
-	else
+	if (cmd->option[2] != NULL)
 	{
-		printf("env with no options or arguments");
-		return (1);
+		printf("exit: too many arguments\n");
+		exit(1);
 	}
+	exit(ft_atoll(cmd->option[1]));
 }

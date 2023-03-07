@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:23:40 by migo              #+#    #+#             */
-/*   Updated: 2023/03/06 16:29:58 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 16:54:02 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_isalpha(int c)
 	return (0);
 }
 
-void	read_env(t_env *env)
+int	read_env(t_env *env)
 {
 	while (env)
 	{
@@ -32,6 +32,7 @@ void	read_env(t_env *env)
 		printf("%s\n", env->var);
 		env = env->next;
 	}
+	return (0);
 }
 
 int	same_env(char *str)
@@ -48,15 +49,14 @@ int	same_env(char *str)
 	return (i);
 }
 
-int	change_env(char *str)
+int	rule_env(char *str, t_env *tmp)
 {
-	t_env	*tmp;
-
-	tmp = g_global;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, str, same_env(str)) == 0)
+		if (ft_strncmp(tmp->var, str, same_env(tmp->var)) == 0)
 		{
+			if (ft_strlen(str) == same_env(str))
+				return (0);
 			free(tmp->var);
 			tmp->var = ft_strdup(str);
 			return (0);
@@ -66,48 +66,33 @@ int	change_env(char *str)
 	return (1);
 }
 
-int	rule_env(char *str, t_env *env)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=' && ft_isalpha(str[0]))
-		{
-			return (change_env(str));
-		}
-		i++;
-	}
-	if (ft_isalpha(str[0]) == 0)
-		printf("export: \'%s\': not a valid identifier\n", str);
-	return (0);
-}
-
-void	builtin_export(t_cmd *cmd)
+int	builtin_export(t_cmd *cmd, t_env *env)
 {
 	int		i;
 	t_env	*node;
 
 	i = 0;
-	node = g_global;
-	if (ft_strncmp((cmd->option[0]), "export", ft_strlen(cmd->option[0])) == 0)
+	if (cmd->option[1] == NULL)
+		return (read_env(env));
+	if (ft_isalpha(cmd->option[1][0]) == 0)
 	{
-		while (node->next)
-			node = node->next;
-		while (cmd->option[++i])
-		{
-			if (rule_env(cmd->option[i], g_global) == 1)
-			{
-				node->next = malloc(sizeof(t_env));
-				if (node->next == 0)
-					return ;
-				node->next->var = ft_strdup(cmd->option[i]);
-				node->next->next = NULL;
-				node = node->next;
-			}
-		}
-		if (cmd->option[1] == NULL)
-			read_env(g_global);
+		printf("export: \'%s\': not a valid identifier\n", cmd->option[1]);
+		return (1);
 	}
+	node = (env);
+	while (node->next)
+		node = node->next;
+	while (cmd->option[++i])
+	{
+		if (rule_env(cmd->option[i], env) == 1)
+		{
+			node->next = malloc(sizeof(t_env));
+			if (node->next == 0)
+				return ;
+			node->next->var = ft_strdup(cmd->option[i]);
+			node->next->next = NULL;
+			node = node->next;
+		}
+	}
+	return (0);
 }

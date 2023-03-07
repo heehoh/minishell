@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:30:37 by migo              #+#    #+#             */
-/*   Updated: 2023/03/06 16:44:02 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 17:15:15 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,99 +17,70 @@
 #include "libft/libft.h"
 #include <fcntl.h>
 
-int	rule_cd(char *str)
+int	ft_isalpha(int c)
 {
-	int fd;
-	int i;
-	char path[4096];
-
-	if (getcwd(path, 4096) == NULL)
+	if (65 <= c && c <= 90)
+		return (1);
+	else if (97 <= c && c <= 122)
+		return (1);
+	else
 		return (0);
-	if (str[0] == '.' && str[1] == '.')
-	{
-		i = ft_strlen((path)) - 1;
-		while ((path)[i] != '/')
-			i--;
-		(path)[i] = '\0';
-		chdir(path);
-		return (0);
-	}
-	fd = open(str, O_RDONLY);
-	if (fd < 0)
-	{
-		printf("cd: %s: No such file or directory\n", str);
-		return (0);
-	}
-	return (1);
+	return (0);
 }
 
-void	cd_option(char *str)
+int	cp_env(char *str)
 {
-	char	path[4096];
-	int		i;
-	int		j;
+	int	i;
 
 	i = 0;
-	j = 0;
-	if (getcwd(path, 4096) == NULL)
-		return ;
-	if (rule_cd(str) == 0)
-		return ;
-	if (str[0] == '/')
+	while (str[i])
 	{
-		if (chdir(str) < 0)
-			printf("cd: %s: Not a directory\n", str);
-		return ;
-	}
-	while (path[i])
+		if (str[i] == '=')
+			break ;
 		i++;
-	path[i] = '/';
-	i++;
-	while (str[j])
-	{
-		path[i] = str[j];
-		i++;
-		j++;
 	}
-	path[i] = str[j];
-	if (chdir(path) < 0)
-		printf("cd: %s: Not a directory\n", str);
+	return (i - 1);
 }
 
-void	builtin_cd(t_cmd *cmd)
+int	builtin_unset(t_cmd *cmd, t_env *env)
 {
 	t_env	*tmp;
-	char	*str;
+	t_env	*pre_tmp;
+	int		i;
 
-	tmp = g_global;
-	if (ft_strncmp((cmd->option[0]), "cd", ft_strlen(cmd->option[0])) == 0)
+	i = 0;
+	if (ft_isalpha(cmd->option[1][0]) == 0)
 	{
-		if (cmd->option[1] != NULL)
+		printf("export: \'%s\': not a valid identifier\n", cmd->option[1]);
+		return (1);
+	}
+	while (cmd->option[++i])
+	{
+		tmp = env;
+		if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
 		{
-			cd_option(cmd->option[1]);
+			env = tmp->next;
+			free(tmp);
 		}
-		else
+		while (tmp)
 		{
-			while (tmp)
+			pre_tmp = tmp;
+			tmp = tmp->next;
+			if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
 			{
-				if (ft_strncmp(tmp->var, "HOME", 4) == 0)
-					break ;
-				tmp = tmp->next;
-			}
-			if (ft_strncmp(tmp->var, "HOME", 4) == 0)
-			{
-				str = ft_strdup((tmp->var + 5));
-				chdir(str);
-				free(str);
+				pre_tmp->next = tmp->next;
+				free(tmp);
 			}
 		}
 	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_cmd	*cmd;
+	t_env	*env1;
 	char	path[4096];
 
 	get_env_list(env);
@@ -123,10 +94,13 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(input);
 		cmd = parse_input(input);
-		read_cmd(cmd);
-		builtin_cd(cmd);
-		getcwd(path, 4096);
-		printf("%s\n", path);
+		builtin_unset(cmd, g_global);
+		env1 = g_global;
+		while (env1)
+		{
+			printf("%s\n", env1->var);
+			env1 = env1->next;
+		}
 		free(input);
 	}
 }

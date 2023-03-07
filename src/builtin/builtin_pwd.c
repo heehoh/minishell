@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:26:44 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/03 16:07:42 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 12:45:34 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #define PATH_MAX 4096
 
-void	builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*path;
 
@@ -34,6 +34,7 @@ void	builtin_pwd(void)
 	else
 		perror("pwd error");
 	free(path);
+	return (0);
 }
 
 void	builtin_cd(t_cmd *cmd)
