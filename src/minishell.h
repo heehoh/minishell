@@ -6,14 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 20:27:42 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 21:20:00 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# include <unistd.h>
 
 typedef struct s_env
 {
@@ -47,5 +45,13 @@ t_env	*get_env_list(char **env);
 void	is_cmd_or_file(char **sep_pipe, int *flag);
 int		flag_quote(char *sep_pipe, int *quote_flag);
 void	cmd_clear(t_cmd *cmd);
+
+int		syntax_error(char *input);
+void	error_malloc(void);
+void	error_pipe(void);
+void	error_fork(void);
+void	error_open(char *name);
+void	error_access(char *cmd);
+
 
 #endif
