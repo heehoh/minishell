@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_wave.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:25:17 by migo              #+#    #+#             */
-/*   Updated: 2023/03/06 16:37:45 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 21:13:08 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cnt_wave(char *str)
 	count = 0;
 	while (*str)
 	{
-		flag_quote(str,&quote_flag);
+		flag_quote(str, &quote_flag);
 		if (*str == '~' && quote_flag == 0)
 		{
 			if (str[1] == '/' || str[1] == ' ' || str[1] == '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/06 16:06:51 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 21:12:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,41 @@ void	read_cmd(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 		++j;
+	}
+}
+
+void	str_array_clear(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		++i;
+	}
+	free(str);
+}
+
+void	cmd_clear(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	while (cmd)
+	{
+		tmp = cmd->next;
+		str_array_clear(cmd->option);
+		i = 0;
+		while (cmd->file[i].redirection)
+		{
+			if (cmd->file[i].redirection == 1)
+				unlink(cmd->file[i].name);
+			free(cmd->file[i].name);
+			i++;
+		}
+		free(cmd->file);
+		free(cmd);
+		cmd = tmp;
 	}
 }

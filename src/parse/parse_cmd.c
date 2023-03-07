@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/06 17:00:57 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/07 21:11:49 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,24 @@ void	replace_env(t_cmd *cmd, t_env *env)
 	}
 }
 
-// void	cmd_clear(t_cmd **cmd)
-// {
-// 	t_cmd	*tmp;
-// 	int		i;
-
-// 	while (*cmd)
-// 	{
-// 		i = 0;
-// 		tmp = (*cmd)->next;
-// 		demin_char((*cmd)->option);
-// 		while ((*cmd)->file[i].redirection)
-// 		{
-// 			free((*cmd)->file[i].name);
-// 			i++;
-// 		}
-// 		free((*cmd)->file);
-// 		free(*cmd);
-// 		*cmd = tmp;
-// 	}
-// }
-
-t_cmd	*parse_input(char *str)
+t_cmd	*parse_input(char *input, t_env *env)
 {
 	t_cmd	*cmd;
 	char	**sep_pipe;
 	int		i;
 
-	sep_pipe = ft_split(str, '|');
+	sep_pipe = ft_split(input, '|');
+	if (sep_pipe == NULL)
+		error_malloc();
+	free(input);
 	cmd = get_cmd(sep_pipe[0]);
 	i = 0;
 	while (sep_pipe[++i])
 		cmd_lstadd_back(cmd, get_cmd(sep_pipe[i]));
+	str_array_clear(sep_pipe);
 	consider_wave(cmd);
 	consider_exit(cmd);
-	replace_env(cmd, g_global);
+	replace_env(cmd, env);
 	return (cmd);
 }
 /*sep_pipe must free*/

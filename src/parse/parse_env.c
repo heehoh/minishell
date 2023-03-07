@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 20:52:45 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 21:13:26 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 //	char	*num;
 
 //	num = ft_itoa(g_status);
+//	if (num == NULL)
+//		malloc_error();
 //	i = 0;
 //	while (num[i])
 //	{
