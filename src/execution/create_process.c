@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/06 20:28:58 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 10:50:09 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	create_process(t_cmd *cmd, t_env *env)
 	here_doc_file(cmd, env);
 	set_process(&process, cmd, env);
 	if (process.count == 1 && is_builtin(cmd->option[0]))
-		return (builtin_process());
+		return (builtin_process(cmd, env));
 	set_pid_pipe(&pid, &fd, process.count);
 	i = -1;
 	while (++i < process.count)

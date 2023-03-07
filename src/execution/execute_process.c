@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/06 20:51:58 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 12:46:56 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 		close(*read_fd);
 		*read_fd = open(cmd->file[i].name, O_RDONLY);
 		if (*read_fd < 0)
-			error_open();
+			error_open(cmd->file[i].name);
 	}
 	else if (cmd->file[i].redirection == 3)
 	{
@@ -30,7 +30,7 @@ void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 		*write_fd = open(cmd->file[i].name,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (*write_fd < 0)
-			error_open();
+			error_open(cmd->file[i].name);
 	}
 	else if (cmd->file[i].redirection == 4)
 	{
@@ -38,7 +38,7 @@ void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 		*write_fd = open(cmd->file[i].name,
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (*write < 0)
-			error_open();
+			error_open(cmd->file[i].name);
 	}
 }
 
@@ -72,7 +72,7 @@ void	execute_process(t_process *process, int read_fd, int write_fd)
 	if (process->cmd->option[0] == NULL)
 		exit(0);
 	if (is_builtin(process->cmd->option[0]))
-		exit(builtin_process(process->cmd));
+		exit(builtin_process(process->cmd, process->env));
 	command = get_command(process->cmd->option[0], process->env);
 	execve(command, process->cmd->option, NULL);
 }

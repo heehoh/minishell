@@ -6,15 +6,15 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/05 16:13:37 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 12:52:29 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include <readline/readline.h>
-#include "./src/libft/libft.h"
-#include "./src/minishell.h"
+#include "../../libft/libft.h"
+#include "../minishell.h"
 
 char	*get_tmp_dir(t_env *env)
 {
@@ -62,7 +62,7 @@ void	here_doc_write(char *limiter, char *tmp_file)
 
 	fd = open(tmp_file, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
-		error_open();
+		error_open(tmp_file);
 	while (1)
 	{
 		str = readline("> ");
@@ -106,16 +106,3 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 		cmd = cmd->next;
 	}
 }
-
-//파싱된 커멘드 셋 받음
-//그 안에 히어독 있는지 검사 -> 이중반복문으로 순회하면서 히어독 오픈 here_doc_file
-//tmpdir strjoin 해서 here_doc 파일 만듦.
-//pid cmd 개수만큼 malloc
-//pipe 2 * (cmd 개수 -1) malloc
-//pipe 오픈
-//fork
-//dup2로 파일 입출력 방향 전환
-//안쓰는 pipe 닫고 
-//wait
-
-//$? 파싱에서 해결해야 함함

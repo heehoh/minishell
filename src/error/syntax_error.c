@@ -6,14 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/03 19:13:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/07 12:36:40 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 #include <unistd.h>
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
 
 #define SYNEND "minishell: syntax error: unexpected end of file\n"
@@ -41,7 +39,7 @@ int	syntax_quote_error(int quote)
 	else
 		write(2, SYNDOUB, ft_strlen(SYNDOUB));
 	write(2, SYNEND, ft_strlen(SYNEND));
-	return (1);
+	return (258);
 }
 
 int	syntax_redir_error(char *input)
@@ -109,7 +107,7 @@ int	syntax_error(char *input)
 		if (quote_flag == 0 && (is_redir(*input) || *input == '|'))
 		{
 			if (syntax_error_util(&input, *input, cmd_flag))
-				return (1);
+				return (258);
 			cmd_flag = 0;
 		}
 		else
