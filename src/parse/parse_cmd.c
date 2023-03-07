@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/02 14:50:42 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/06 17:00:57 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_cmd	*parse_input(char *str)
 	i = 0;
 	while (sep_pipe[++i])
 		cmd_lstadd_back(cmd, get_cmd(sep_pipe[i]));
+	consider_wave(cmd);
+	consider_exit(cmd);
 	replace_env(cmd, g_global);
 	return (cmd);
 }
