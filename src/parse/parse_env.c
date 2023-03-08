@@ -6,52 +6,19 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 21:13:26 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:55:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../libft/libft.h"
-
-//int	num_env_exit(void)
-//{
-//	int		len;
-//	char	*num;
-
-//	num = ft_itoa(g_status);
-//	if (num == NULL)
-//		malloc_error();
-//	len = ft_strlen(num);
-//	free(num);
-//	return (len + 1);
-//}
-
-//int	put_env_exit(char *change, int *count)
-//{
-//	int		i;
-//	char	*num;
-
-//	num = ft_itoa(g_status);
-//	if (num == NULL)
-//		malloc_error();
-//	i = 0;
-//	while (num[i])
-//	{
-//		change[*count] = num[i];
-//		++(*count);
-//		++i;
-//	}
-//	free(num);
-//	return (i + 1);
-//}
+#include "../../libft/libft.h"
 
 int	num_env_word(char *str, t_env *env, int *count)
 {
 	int		i;
-	char	*num;
 
 	if (*str == '?')
-		return (num_env_exit());
+		return (num_env_exit(count));
 	while (env)
 	{
 		i = 0;
@@ -91,7 +58,6 @@ int	cnt_env(char *str, t_env *env)
 int	put_env_word(char *change, char *str, t_env *env, int *count)
 {
 	int		i;
-	char	*num;
 
 	if (*str == '?')
 		return (put_env_exit(change, count));
@@ -148,10 +114,8 @@ void	replace_util(char **str, t_env *env)
 	count = cnt_env(*str, env);
 	*str = malloc(sizeof(char) * (count + 1));
 	if (*str == NULL)
-		return ;
+		error_malloc();
 	(*str)[count] = '\0';
 	insert_env(prev, *str, env);
 	free(prev);
 }
-
-//line 이라고 써있는 것 string으로 통일. change -> prev 이전의 문자라는 뜻으로 변수 바꿈

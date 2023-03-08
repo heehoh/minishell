@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:02:46 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 17:45:10 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/08 14:10:53 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
 
 int	is_builtin(char *command)
@@ -43,9 +43,10 @@ int	builtin_process(t_cmd *cmd, t_env *env)
 	if (ft_strncmp((cmd->option[0]), "export", ft_strlen(cmd->option[0])) == 0)
 		return (builtin_export(cmd, env));
 	if (ft_strncmp((cmd->option[0]), "pwd", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_pwd(cmd));
+		return (builtin_pwd());
 	if (ft_strncmp((cmd->option[0]), "unset", ft_strlen(cmd->option[0])) == 0)
 		return (builtin_unset(cmd, env, 0));
 	if (ft_strncmp((cmd->option[0]), "exit", ft_strlen(cmd->option[0])) == 0)
 		builtin_exit(cmd);
+	return (0);
 }

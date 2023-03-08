@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:05:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/02 13:06:42 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:56:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	op_word_count(char **option, char *sep_pipe, int quote_flag, int op_num)
 		{
 			option[i] = malloc(sizeof(char) * word_count + 1);
 			if (option[i] == NULL)
-				return ;
+				error_malloc();
 			i++;
 		}
 	}
@@ -115,13 +115,12 @@ void	put_option(char **option, char *sep_pipe, int quote_flag, int op_num)
 char	**parse_cmd_option(char *sep_pipe)
 {
 	char	**option;
-	char	*str;
 	int		count;
 
 	count = num_option(sep_pipe);
 	option = (char **)malloc(sizeof(char *) * (count + 1));
-	if (option == 0)
-		return (0);
+	if (option == NULL)
+		error_malloc();
 	option[count] = NULL;
 	if (count == 0)
 		return (option);
@@ -129,4 +128,3 @@ char	**parse_cmd_option(char *sep_pipe)
 	put_option(option, sep_pipe, 0, count);
 	return (option);
 }
-

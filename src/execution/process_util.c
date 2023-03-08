@@ -6,12 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:53:21 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/06 20:51:58 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:06:35 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 int	cmd_count(t_cmd *cmd)
 {

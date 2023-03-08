@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 12:52:29 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:05:47 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 				tmp_file = tmp_file_name(tmp_file, cmd_count, env);
 				if (tmp_file == NULL)
 					error_malloc();
-				hear_doc_write(cmd->file[file_count].name, tmp_file);
+				here_doc_write(cmd->file[file_count].name, tmp_file);
 				free(cmd->file[file_count].name);
 				cmd->file[file_count].name = tmp_file;
 			}
