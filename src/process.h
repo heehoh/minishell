@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:23:55 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 19:54:46 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:25:31 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PROCESS_H
 
 # include "minishell.h"
+# include <unistd.h>
 
 typedef struct s_process
 {
@@ -30,5 +31,6 @@ void	here_doc_file(t_cmd *cmd, t_env *env);
 void	execute_process(t_process *process, int read_fd, int write_fd);
 int		execute_parent_process(t_process *process, int read_fd, int write_fd);
 int		create_process(t_cmd *cmd, t_env *env);
+char	*get_command(char *cmd, t_env *env);
 
 #endif

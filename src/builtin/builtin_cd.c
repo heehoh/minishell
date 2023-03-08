@@ -6,13 +6,14 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 20:15:48 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:06:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 int	rule_cd(char *str, char *path)
 {

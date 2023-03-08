@@ -6,12 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 20:23:20 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:43:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 
 int	num_file(char *sep_pipe)
 {
@@ -94,7 +94,7 @@ void	fl_word_count(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 		{
 			file[i].name = malloc(sizeof(char) * word_count + 1);
 			if (file[i].name == NULL)
-				return ;
+				error_malloc();
 			i++;
 		}
 	}
@@ -136,8 +136,8 @@ t_file	*parse_file(char *sep_pipe)
 
 	count = num_file(sep_pipe);
 	file = malloc(sizeof(t_file) * (count + 1));
-	if (file == 0)
-		return (0);
+	if (file == NULL)
+		error_malloc();
 	file[count].name = NULL;
 	file[count].redirection = 0;
 	if (count == 0)

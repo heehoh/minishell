@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 17:44:50 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/08 14:08:34 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void	builtin_exit(t_cmd *cmd)
 {
@@ -20,7 +21,7 @@ void	builtin_exit(t_cmd *cmd)
 	if (cmd->option[1] != NULL)
 		exit(0);
 	if (ft_atoll(cmd->option[1]) > 2147483647
-		|| ft_atoll(cmd->option[1] < -2147483648))
+		|| ft_atoll(cmd->option[1]) < -2147483648)
 	{
 		printf("exit: %s: numeric argument required\n", cmd->option[1]);
 		exit(1);

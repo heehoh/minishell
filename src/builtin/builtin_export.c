@@ -6,23 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 20:16:12 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:09:23 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
-
-int	ft_isalpha(int c)
-{
-	if (65 <= c && c <= 90)
-		return (1);
-	else if (97 <= c && c <= 122)
-		return (1);
-	else
-		return (0);
-	return (0);
-}
+#include <stdio.h>
 
 int	read_env(t_env *env)
 {
@@ -35,7 +25,7 @@ int	read_env(t_env *env)
 	return (0);
 }
 
-int	same_env(char *str)
+size_t	same_env(char *str)
 {
 	int	i;
 
@@ -88,7 +78,7 @@ int	builtin_export(t_cmd *cmd, t_env *env)
 		{
 			node->next = malloc(sizeof(t_env));
 			if (node->next == 0)
-				return ;
+				return (0);
 			node->next->var = ft_strdup(cmd->option[i]);
 			node->next->next = NULL;
 			node = node->next;

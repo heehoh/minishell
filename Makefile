@@ -2,6 +2,7 @@ NAME = minishell
 SRCS = main.c \
 	   /parse/parse_cmd.c \
 	   /parse/parse_env.c \
+	   /parse/parse_exit_code.c \
 	   /parse/parse_file.c \
 	   /parse/parse_option.c \
 	   /parse/parse_util.c \
@@ -10,7 +11,17 @@ SRCS = main.c \
 	   /execution/get_command.c \
 	   /execution/here_doc.c \
 	   /execution/process_util.c \
-
+	   /error/print_error.c \
+	   /error/syntax_error.c \
+	   /builtin/builtin_cd.c \
+	   /builtin/builtin_echo.c \
+	   /builtin/builtin_env.c \
+	   /builtin/builtin_exit.c \
+	   /builtin/builtin_export.c \
+	   /builtin/builtin_pwd.c \
+	   /builtin/builtin_unset.c \
+	   /builtin/is_builtin.c \
+	   /env/env.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -28,14 +39,14 @@ OBJS_FILES = $(addprefix $(OBJ_DIR)/, $(OBJS))
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -lft -Llibft
+LFLAGS = -lft -Llibft -lreadline
 
 LIBFT = libft/libft.a
 
 all : $(NAME)
 
 $(LIBFT) :
-	make -C src/libft
+	make -C libft
 
 $(OBJ_DIRS) :
 	mkdir -p $(OBJ_DIRS)
@@ -48,7 +59,7 @@ $(NAME) : $(OBJS_FILES) $(LIBFT)
 
 clean :
 	make -C libft clean
-	rm -rf $(OBJ_DIRS)
+	rm -rf $(OBJ_DIR)
 .PHONY : clean
 
 fclean : clean

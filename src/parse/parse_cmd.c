@@ -6,20 +6,20 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 21:11:49 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:53:22 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 
 t_cmd	*get_cmd(char *sep_pipe)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd) * 1);
-	if (cmd == 0)
-		return (0);
+	if (cmd == NULL)
+		error_malloc();
 	cmd->file = parse_file(sep_pipe);
 	cmd->option = parse_cmd_option(sep_pipe);
 	cmd->next = NULL;
@@ -64,10 +64,6 @@ t_cmd	*parse_input(char *input, t_env *env)
 	while (sep_pipe[++i])
 		cmd_lstadd_back(cmd, get_cmd(sep_pipe[i]));
 	str_array_clear(sep_pipe);
-	consider_wave(cmd);
-	consider_exit(cmd);
 	replace_env(cmd, env);
 	return (cmd);
 }
-/*sep_pipe must free*/
-/*malloc error 처리*/

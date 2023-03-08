@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:01:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/07 12:08:36 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/08 14:07:06 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../../libft/libft.h"
 #include "../minishell.h"
+#include <stdio.h>
 
 int	builtin_echo(t_cmd *cmd)
 {

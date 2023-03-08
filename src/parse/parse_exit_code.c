@@ -1,34 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   parse_exit_code.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 13:38:22 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:33:11 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/08 11:57:27 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/08 14:16:31 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../../libft/libft.h"
 
-t_env	*get_env_list(char **env)
-{
-	size_t	i;
-	t_env	*env_list;
-	t_env	*node;
+int g_status = 100;
 
-	env_list = (t_env *)malloc(sizeof(t_env));
-	env_list->var = ft_strdup(env[0]);
-	node = env_list;
+int	num_env_exit(int *count)
+{
+	int		len;
+	char	*num;
+
+	num = ft_itoa(g_status);
+	if (num == NULL)
+		error_malloc();
+	len = ft_strlen(num);
+	*count += len;
+	free(num);
+	return (len + 1);
+}
+
+int	put_env_exit(char *change, int *count)
+{
+	int		i;
+	char	*num;
+
+	num = ft_itoa(g_status);
+	if (num == NULL)
+		error_malloc();
 	i = 0;
-	while (env[++i])
+	while (num[i])
 	{
-		node->next = (t_env *)malloc(sizeof(t_env));
-		node->next->var = ft_strdup(env[i]);
-		node = node->next;
+		change[*count] = num[i];
+		++(*count);
+		++i;
 	}
-	node->next = NULL;
-	return (env_list);
+	free(num);
+	return (i + 1);
 }

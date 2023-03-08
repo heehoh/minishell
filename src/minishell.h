@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 21:20:00 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:04:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,28 @@ t_env	*get_env_list(char **env);
 void	is_cmd_or_file(char **sep_pipe, int *flag);
 int		flag_quote(char *sep_pipe, int *quote_flag);
 void	cmd_clear(t_cmd *cmd);
+void	str_array_clear(char **str);
 
-int		syntax_error(char *input);
+int		num_env_exit(int *count);
+int		put_env_exit(char *change, int *count);
+
+int		is_builtin(char *command);
+int		builtin_process(t_cmd *cmd, t_env *env);
+
+int		syntax_error(char *input, int quote_flag, int cmd_flag);
 void	error_malloc(void);
 void	error_pipe(void);
 void	error_fork(void);
 void	error_open(char *name);
 void	error_access(char *cmd);
+void	error_cmd_not_found(char *cmd);
 
+int		builtin_cd(t_cmd *cmd, t_env *tmp);
+int		builtin_echo(t_cmd *cmd);
+int		builtin_env(t_cmd *cmd, t_env *tmp);
+void	builtin_exit(t_cmd *cmd);
+int		builtin_export(t_cmd *cmd, t_env *env);
+int		builtin_pwd(void);
+int		builtin_unset(t_cmd *cmd, t_env *env, int i);
 
 #endif
