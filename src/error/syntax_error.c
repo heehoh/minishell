@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:06:57 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:24:52 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_redir(char c)
 	return (0);
 }
 
-int	syntax_quote_error(char *input, int quote)
+int	syntax_quote_error(int quote)
 {
 	write(2, "> ", 2);
 	if (quote == 1)
@@ -31,7 +31,6 @@ int	syntax_quote_error(char *input, int quote)
 	else
 		write(2, SYNDOUB, ft_strlen(SYNDOUB));
 	write(2, SYNEND, ft_strlen(SYNEND));
-	free(input);
 	return (258);
 }
 
@@ -95,10 +94,7 @@ int	syntax_error(char *input, int quote_flag, int cmd_flag)
 		if (quote_flag == 0 && (is_redir(*input) || *input == '|'))
 		{
 			if (syntax_error_util(&input, *input, cmd_flag))
-			{
-				free(input);
 				return (258);
-			}
 			cmd_flag = 0;
 		}
 		else
@@ -108,6 +104,6 @@ int	syntax_error(char *input, int quote_flag, int cmd_flag)
 		}
 	}
 	if (quote_flag != 0)
-		return (syntax_quote_error(input, quote_flag));
+		return (syntax_quote_error(quote_flag));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:29:52 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:04:43 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 17:56:06 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ void	error_cmd_not_found(char *cmd)
 	write(2, "minishell: ", 11);
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": command not found\n", 20);
+	exit (127);
 }

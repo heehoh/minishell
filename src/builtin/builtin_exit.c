@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 14:08:34 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:16:53 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 void	builtin_exit(t_cmd *cmd)
 {
-	printf("exit");
-	if (cmd->option[1] != NULL)
+	printf("exit\n");
+	if (cmd->option[1] == NULL)
 		exit(0);
 	if (ft_atoll(cmd->option[1]) > 2147483647
 		|| ft_atoll(cmd->option[1]) < -2147483648)

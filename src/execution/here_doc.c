@@ -6,12 +6,11 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:05:47 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 17:24:21 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <stdio.h>
 #include <readline/readline.h>
 #include "../../libft/libft.h"
 #include "../minishell.h"
