@@ -2,3 +2,6 @@
 obj
 minishell
 a.out
+*.o
+libft.a
+.vscode

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:39:41 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 12:30:33 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 16:22:02 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*get_command(char *cmd, t_env *env)
 	int		i;
 
 	i = 0;
+	if (cmd[0] == '\0')
+		error_cmd_not_found(cmd);
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')

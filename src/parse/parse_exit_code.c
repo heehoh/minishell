@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:57:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:16:31 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:13:17 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	num_env_exit(int *count)
 	len = ft_strlen(num);
 	*count += len;
 	free(num);
-	return (len + 1);
+	return (2);
 }
 
 int	put_env_exit(char *change, int *count)
@@ -45,5 +45,5 @@ int	put_env_exit(char *change, int *count)
 		++i;
 	}
 	free(num);
-	return (i + 1);
+	return (2);
 }

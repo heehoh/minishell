@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:00:56 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 17:26:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <stdio.h>
+
 void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 {
-	if (cmd->file[i].redirection == 1 && cmd->file[i].redirection == 2)
+	if (cmd->file[i].redirection == 1 || cmd->file[i].redirection == 2)
 	{
 		close(*read_fd);
 		*read_fd = open(cmd->file[i].name, O_RDONLY);
@@ -77,7 +79,7 @@ void	execute_process(t_process *process, int read_fd, int write_fd)
 		dup2(read_fd, 0);
 		close(read_fd);
 	}
-	if (write_fd != 0)
+	if (write_fd != 1)
 	{
 		dup2(write_fd, 1);
 		close(write_fd);
