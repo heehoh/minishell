@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/07 19:27:33 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/08 11:23:40 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 		++(*input);
 		while ((**input == ' ' || is_redir(**input)))
 			++(*input);
-		if (cmd_flag == 0)
+		if (**input == '|')
 			return (write(2, SYNPIP, ft_strlen(SYNPIP)));
-		else if (**input == '\0' && cmd_flag == 1)
+		else if (**input == '\0')
 		{
 			write(2, "> ", 2);
 			return (write(2, SYNEND, ft_strlen(SYNEND)));
@@ -72,7 +72,7 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 	else
 	{
 		if (is_redir(*(++(*input))) && token != *((*input)++))
-			return (syntax_redir_error(*input));
+			return (syntax_redir_error(*input - 1));
 		while (**input == ' ')
 			++(*input);
 		if (**input == '|')
@@ -111,10 +111,3 @@ int	syntax_error(char *input)
 		return (syntax_quote_error(quote_flag));
 	return (0);
 }
-
-// 싱글쿼트나 더블쿼트가 홀수 일  때  에러
-// PIPE는 앞에 명령어가 없으면 pipe token error
-// pipe |  -> x unexpecter end of file
-// pipe 사이에 아무문자가 없거나 공백만 있으면 에러
-// < 파이프가 나올 때 또는 리다이렉션이 있을 때 까지 아무 문자가 없거나 공백일 때 에러
-// syntax_error exitcode 258
