@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:04:54 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:35:59 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,31 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_current
+{
+	char	*path;
+	int		status;
+}	t_current;
+
 # define CMDFLAG 0
 # define FILEFLAG 1
+# define INITERR "shell-init: error retrieving current directory: \
+				getcwd: cannot access parent directories"
+# define MINISHELL "\033[32mminishell$ \033[0m"
 
-extern int	g_status;
-
-t_cmd	*parse_input(char *str, t_env *env);
+t_cmd	*parse_input(char *str, t_env *env, int status);
 t_file	*parse_file(char *sep_pipe);
 char	**parse_cmd_option(char *sep_pipe);
-void	replace_util(char **str, t_env *env);
+void	replace_env(char **sep_pipe, t_env *env, int status);
+void	delete_quote(t_cmd *cmd);
 t_env	*get_env_list(char **env);
 void	is_cmd_or_file(char **sep_pipe, int *flag);
 int		flag_quote(char *sep_pipe, int *quote_flag);
 void	cmd_clear(t_cmd *cmd);
 void	str_array_clear(char **str);
 
-int		num_env_exit(int *count);
-int		put_env_exit(char *change, int *count);
+int		num_env_exit(int *count, int status);
+int		put_env_exit(char *change, int *count, int status);
 
 int		is_builtin(char *command);
 int		builtin_process(t_cmd *cmd, t_env *env);

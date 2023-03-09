@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:39:41 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 16:22:02 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 11:55:52 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**get_path(t_env *env)
 	return (path);
 }
 
-void	ft_free(char **path, char *cmd)
+static void	ft_free(char **path, char *cmd)
 {
 	int	i;
 

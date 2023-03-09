@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 17:49:04 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:15:17 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ int	create_process_loop(t_process *process)
 		++i;
 	}
 	close_pipe(fd, process->count, STDIN_FILENO, STDOUT_FILENO);
+	free(fd);
 	return (wait_process(process->count, pid));
 }
 
-int	create_process(t_cmd *cmd, t_env *env)
+int	create_process(t_cmd *cmd, t_env *env, t_current *current)
 {
 	t_process	process;
 
@@ -101,6 +102,6 @@ int	create_process(t_cmd *cmd, t_env *env)
 	set_process(&process, cmd, env);
 	if (process.count == 1 && cmd->option[0] != NULL
 		&& is_builtin(cmd->option[0]))
-		return (execute_parent_process(&process, STDIN_FILENO, STDOUT_FILENO));
+		return (execute_parent_process(&process, STDIN_FILENO, STDOUT_FILENO, current));
 	return (create_process_loop(&process));
 }

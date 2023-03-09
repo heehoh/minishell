@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 14:07:53 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 13:18:57 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	builtin_unset(t_cmd *cmd, t_env *env, int i)
 			{
 				pre_tmp->next = tmp->next;
 				free(tmp);
+				break ;
 			}
 		}
 	}
