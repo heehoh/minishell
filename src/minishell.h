@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:35:59 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:39:01 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		num_env_exit(int *count, int status);
 int		put_env_exit(char *change, int *count, int status);
 
 int		is_builtin(char *command);
-int		builtin_process(t_cmd *cmd, t_env *env);
+int		builtin_process(t_cmd *cmd, t_env *env, t_current *current);
 
 int		syntax_error(char *input, int quote_flag, int cmd_flag);
 void	error_malloc(void);
