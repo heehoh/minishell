@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 10:56:07 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:58:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	builtin_pwd(t_current *current)
 {
-	if (current->path == NULL)
+	if (current->path[0] == '\0')
 	{
 		write(2, "pwd: error retrieving current directory:", 40);
 		if (getcwd(current->path, 4096) == NULL)
