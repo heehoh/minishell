@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:53:21 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 17:59:06 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 12:02:12 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	wait_process(int count, pid_t *pid)
 		waitpid(pid[i], &status, 0);
 		++i;
 	}
+	free(pid);
 	status = (status >> 8) & 0xff;
 	return (status);
 }

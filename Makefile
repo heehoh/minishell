@@ -6,6 +6,7 @@ SRCS = main.c \
 	   /parse/parse_file.c \
 	   /parse/parse_option.c \
 	   /parse/parse_util.c \
+	   /parse/delete_quote.c \
 	   /execution/create_process.c \
 	   /execution/execute_process.c \
 	   /execution/get_command.c \

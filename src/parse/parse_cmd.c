@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 13:53:22 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:17:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,8 @@ void	cmd_lstadd_back(t_cmd *lst, t_cmd *new)
 	lst->next = new;
 }
 
-void	replace_env(t_cmd *cmd, t_env *env)
-{
-	int	i;
 
-	while (cmd)
-	{
-		i = -1;
-		while (cmd->option[++i])
-			replace_util(&(cmd->option[i]), env);
-		i = -1;
-		while (cmd->file[++i].name)
-			replace_util(&(cmd->file[i].name), env);
-		cmd = cmd->next;
-	}
-}
-
-t_cmd	*parse_input(char *input, t_env *env)
+t_cmd	*parse_input(char *input, t_env *env, int status)
 {
 	t_cmd	*cmd;
 	char	**sep_pipe;
@@ -59,11 +44,12 @@ t_cmd	*parse_input(char *input, t_env *env)
 	if (sep_pipe == NULL)
 		error_malloc();
 	free(input);
+	replace_env(sep_pipe, env, status);
 	cmd = get_cmd(sep_pipe[0]);
 	i = 0;
 	while (sep_pipe[++i])
 		cmd_lstadd_back(cmd, get_cmd(sep_pipe[i]));
 	str_array_clear(sep_pipe);
-	replace_env(cmd, env);
+	delete_quote(cmd);
 	return (cmd);
 }

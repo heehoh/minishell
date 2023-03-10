@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:55:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:33:49 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	num_env_word(char *str, t_env *env, int *count)
 {
 	int		i;
 
-	if (*str == '?')
-		return (num_env_exit(count));
 	while (env)
 	{
 		i = 0;
@@ -33,7 +31,7 @@ int	num_env_word(char *str, t_env *env, int *count)
 	return (i + 1);
 }
 
-int	cnt_env(char *str, t_env *env)
+int	cnt_env(char *str, t_env *env, int status)
 {
 	int	quote_flag;
 	int	count;
@@ -42,10 +40,14 @@ int	cnt_env(char *str, t_env *env)
 	count = 0;
 	while (*str)
 	{
-		if (flag_quote(str, &quote_flag) == 1)
-			str++;
-		else if (*str == '$' && quote_flag != 1)
-			str += num_env_word((str + 1), env, &count);
+		flag_quote(str, &quote_flag);
+		if (*str == '$' && quote_flag != 1)
+		{
+			if (*(str + 1) == '?')
+				str += num_env_exit(&count, status);
+			else
+				str += num_env_word((str + 1), env, &count);
+		}
 		else
 		{
 			str++;
@@ -59,8 +61,6 @@ int	put_env_word(char *change, char *str, t_env *env, int *count)
 {
 	int		i;
 
-	if (*str == '?')
-		return (put_env_exit(change, count));
 	while (env)
 	{
 		i = 0;
@@ -83,7 +83,7 @@ int	put_env_word(char *change, char *str, t_env *env, int *count)
 	return (i + 1);
 }
 
-void	insert_env(char *prev, char *str, t_env *env)
+void	insert_env(char *prev, char *str, t_env *env, int status)
 {
 	int	quote_flag;
 	int	count;
@@ -92,10 +92,14 @@ void	insert_env(char *prev, char *str, t_env *env)
 	count = 0;
 	while (*prev)
 	{
-		if (flag_quote(prev, &quote_flag) == 1)
-			prev++;
-		else if (*prev == '$' && quote_flag != 1)
-			prev += put_env_word(str, (prev + 1), env, &count);
+		flag_quote(prev, &quote_flag);
+		if (*prev == '$' && quote_flag != 1)
+		{
+			if (*(prev + 1) == '?')
+				prev += put_env_exit(str, &count, status);
+			else
+				prev += put_env_word(str, (prev + 1), env, &count);
+		}
 		else
 		{
 			str[count] = *prev;
@@ -105,17 +109,23 @@ void	insert_env(char *prev, char *str, t_env *env)
 	}
 }
 
-void	replace_util(char **str, t_env *env)
+void	replace_env(char **sep_pipe, t_env *env, int status)
 {
+	int		i;
 	char	*prev;
 	int		count;
 
-	prev = *str;
-	count = cnt_env(*str, env);
-	*str = malloc(sizeof(char) * (count + 1));
-	if (*str == NULL)
-		error_malloc();
-	(*str)[count] = '\0';
-	insert_env(prev, *str, env);
-	free(prev);
+	i = 0;
+	while (sep_pipe[i])
+	{
+		prev = sep_pipe[i];
+		count = cnt_env(sep_pipe[i], env, status);
+		sep_pipe[i] = malloc(sizeof(char) * (count + 1));
+		if (sep_pipe[i] == NULL)
+			error_malloc();
+		sep_pipe[i][count] = '\0';
+		insert_env(prev, sep_pipe[i], env, status);
+		free(prev);
+		++i;
+	}
 }

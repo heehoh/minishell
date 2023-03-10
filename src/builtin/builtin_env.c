@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 14:07:28 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:46:14 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	builtin_env(t_cmd *cmd, t_env *tmp)
 
 	if (cmd->option[1] == NULL)
 	{
-		i = 0;
 		while (tmp)
 		{
+			i = 0;
 			while (tmp->var[i])
 			{
 				if (tmp->var[i] == '=')
@@ -37,7 +37,7 @@ int	builtin_env(t_cmd *cmd, t_env *tmp)
 	}
 	else
 	{
-		printf("env with no options or arguments");
+		write(2, "env with no options or arguments\n", 33);
 		return (1);
 	}
 }

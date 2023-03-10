@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:01:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 14:07:06 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:46:15 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	builtin_echo(t_cmd *cmd)
 	flag = 0;
 	if (cmd->option[1] == NULL)
 		return (0);
-	if (ft_strncmp((cmd->option[1]), "-n", ft_strlen(cmd->option[0])) == 0)
+	if (ft_strncmp((cmd->option[1]), "-n", ft_strlen("-n")) == 0)
 	{
 		i++;
 		flag = 1;

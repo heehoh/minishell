@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 15:30:04 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:59:23 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,53 @@
 #include "minishell.h"
 #include "process.h"
 
-int	create_process(t_cmd *cmd, t_env *env);
+void	exit_minishell(void)
+{
+	write(1, "exit\n", 5);
+	exit(0);
+}
 
-//void    read_cmd(t_cmd *cmd)
-//{
-//    int i;
-//    int j;
+int	free_input(char *input)
+{
+	free(input);
+	return (1);
+}
 
-//    j = 1;
-//    while (cmd)
-//    {
-//        i = 0;
-//        while (cmd->option[i])
-//        {
-//            printf("%d pipe -> option : %s\n",j, cmd->option[i]);
-//            i++;
-//        }
-//        i = 0;
-//        while (cmd->file[i].redirection != 0)
-//        {
-//            printf("redirection : %d\n", cmd->file[i].redirection);
-//            printf("file : %s\n", cmd->file[i].name);
-//            i++;
-//        }
-//        cmd = cmd->next;
-//        ++j;
-//    }
-//}
+void	init_setting(char **env, t_env **env_list, t_current *current)
+{
+	*env_list = get_env_list(env);
+	current->path = (char *)malloc(sizeof(char) * 4096);
+	if (getcwd(current->path, 4096))
+	{
+		perror(INITERR);
+		current->path[0] = '\0';
+	}
+	current->status = 0;
+}
 
 int	main(int argc, __attribute__((unused))char **argv, char **env)
 {
-	char	*input;
-	t_cmd	*cmd;
-	t_env	*env_list;
-	int		g_status;
+	char		*input;
+	t_cmd		*cmd;
+	t_env		*env_list;
+	t_current	current;
 
-	if (argc != 1)
+	if (argc != 1 && printf("Error: argument\n"))
 		return (1);
-	env_list = get_env_list(env);
+	init_setting(env, &env_list, &current);
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline(MINISHELL);
 		if (input == NULL)
-			exit(0);
-		if (input[0] == '\0')
-			exit(0);
-		add_history(input);
-		g_status = syntax_error(input, 0, 0);
-		if (g_status == 258)
-		{
-			free(input);
+			exit_minishell();
+		if (input[0] == '\0' && free_input(input))
 			continue ;
-		}
-		cmd = parse_input(input, env_list);
-		g_status = create_process(cmd, env_list);
+		add_history(input);
+		current.status = syntax_error(input, 0, 0);
+		if (current.status == 258 && free_input(input))
+			continue ;
+		cmd = parse_input(input, env_list, current.status);
+		current.status = create_process(cmd, env_list, &current);
 		cmd_clear(cmd);
 	}
 }

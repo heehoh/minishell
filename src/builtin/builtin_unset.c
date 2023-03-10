@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/08 14:07:53 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:46:11 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,50 @@ int	cp_env(char *str)
 	return (i - 1);
 }
 
-int	builtin_unset(t_cmd *cmd, t_env *env, int i)
+void	free_env(t_env *env, t_env *tmp, int i)
+{
+	if (i == 1)
+		env = tmp->next;
+	if (i == 2)
+		env->next = tmp->next;
+	free (tmp);
+}
+
+int	not_valid_unset(char *str)
+{
+	if (str[0] == '_')
+		return (1);
+	write(2, "unset: ", 8);
+	write(2, str, ft_strlen(str));
+	write(2, ": not a valid identifier\n", 25);
+	return (1);
+}
+
+int	builtin_unset(t_cmd *cmd, t_env *env, int i, int j)
 {
 	t_env	*tmp;
 	t_env	*pre_tmp;
 
-	if (ft_isalpha(cmd->option[1][0]) == 0)
-	{
-		printf("export: \'%s\': not a valid identifier\n", cmd->option[1]);
-		return (1);
-	}
+	if (cmd->option[1] == NULL)
+		return (0);
 	while (cmd->option[++i])
 	{
+		if (ft_isalpha(cmd->option[i][0]) == 0)
+		{
+			j = not_valid_unset(cmd->option[i]);
+			continue ;
+		}
 		tmp = env;
 		if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
-		{
-			env = tmp->next;
-			free(tmp);
-		}
+			free_env(env, tmp, 1);
 		while (tmp)
 		{
 			pre_tmp = tmp;
 			tmp = tmp->next;
 			if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
-			{
-				pre_tmp->next = tmp->next;
-				free(tmp);
-			}
+				break ;
 		}
+		free_env(pre_tmp, tmp, 2);
 	}
-	return (0);
+	return (j);
 }
