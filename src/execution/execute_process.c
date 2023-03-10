@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 10:48:00 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:03:56 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-char	**env_for_execve(t_env *env)
-{
-
-}
 
 void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 {
@@ -63,7 +58,8 @@ int	execute_parent_process(t_process *process,
 	int	status;
 
 	open_file(process->cmd, &read_fd, &write_fd);
-	status = builtin_process(process->cmd, process->env, current);
+	status = builtin_process(process->cmd, process->env,
+			process->count, current);
 	if (read_fd != STDIN_FILENO)
 		close(read_fd);
 	if (write_fd != STDOUT_FILENO)
@@ -91,7 +87,8 @@ void	execute_process(t_process *process,
 	if (process->cmd->option[0] == NULL)
 		exit(0);
 	if (is_builtin(process->cmd->option[0]))
-		exit(builtin_process(process->cmd, process->env, current));
+		exit(builtin_process(process->cmd, process->env,
+				process->count, current));
 	command = get_command(process->cmd->option[0], process->env);
 	env = get_env_array(process->env);
 	execve(command, process->cmd->option, env);
