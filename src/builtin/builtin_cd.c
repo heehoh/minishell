@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 10:46:20 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:27:35 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,87 +15,117 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+size_t	same_env(char *str);
+int		rule_env(char *str, t_env *tmp);
+int		no_directory(char *str);
+int		no_file_directory(char *str);
+
 int	rule_cd(char *str, char *path)
 {
 	int		fd;
-	int		i;
 
-	if (str[0] == '.' && str[1] == '.')
-	{
-		i = ft_strlen((path)) - 1;
-		while ((path)[i] != '/')
-			i--;
-		(path)[i] = '\0';
-		chdir(path);
-		return (0);
-	}
 	fd = open(str, O_RDONLY);
 	if (fd < 0)
-	{
-		printf("cd: %s: No such file or directory\n", str);
-		return (0);
-	}
+		no_file_directory(str);
 	if (ft_strlen(str) + ft_strlen(path) > 4096)
 	{
-		printf("path is too long");
+		write(2, "minishell: cd: path is too long\n", 32);
 		return (0);
 	}
 	return (1);
 }
 
-int	cd_option(char *str, int i, int j)
+void	make_env(t_env *env, char *str)
 {
-	char	path[4096];
+	t_env	*tmp;
 
+	tmp = malloc(sizeof(t_env));
+	tmp->var = ft_strdup(str);
+	tmp->next = NULL;
+	while (env->next)
+		env = env->next;
+	env->next = tmp;
+}
+
+int	pwd(char *path, t_env *env, t_env *tmp)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	if (rule_env("OLDPWD=", env) == 1)
+		make_env(env, "OLDPWD=");
+	while (env)
+	{
+		if (ft_strncmp(env->var, "PWD=", 4) == 0)
+			pwd = ft_strjoin("OLDPWD=", (env->var + 4));
+		env = env->next;
+	}
+	if (pwd != NULL)
+		rule_env(pwd, tmp);
+	free(pwd);
 	if (getcwd(path, 4096) == NULL)
+	{
+		write(2, "chdir: error retrieving current directory:", 40);
+		write(2, "getcwd: cannot access parent directories", 41);
+		write(2, ": No such file or directory\n", 28);
 		return (1);
-	if (rule_cd(str, path) == 0)
+	}
+	pwd = ft_strjoin("PWD=", path);
+	rule_env(pwd, tmp);
+	free(pwd);
+	return (0);
+}
+
+int	cd_option(char *str, int i, t_env *env, t_current *current)
+{
+	int	j;
+
+	j = 0;
+	if (rule_cd(str, current->path) == 0)
 		return (1);
 	if (str[0] == '/')
 	{
 		if (chdir(str) < 0)
-			printf("cd: %s: Not a directory\n", str);
-		return (1);
+			return (no_directory(str));
+		else
+			return (pwd(current->path, env, env));
 	}
-	while (path[i])
+	while (current->path[i])
 		i++;
-	path[i] = '/';
+	current->path[i] = '/';
 	i++;
 	while (str[j])
-		path[i++] = str[j++];
-	path[i] = str[j];
-	if (chdir(path) < 0)
-	{
-		printf("cd: %s: Not a directory\n", str);
-		return (1);
-	}
-	return (0);
+		current->path[i++] = str[j++];
+	current->path[i] = str[j];
+	if (chdir(str) < 0)
+		return (no_directory(str));
+	else
+		return (pwd(current->path, env, env));
 }
 
-int	builtin_cd(t_cmd *cmd, t_env *tmp)
+int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 {
 	char	*str;
 
 	if (cmd->option[1] != NULL)
 	{
-		return (cd_option(cmd->option[1], 0, 0));
+		return (cd_option(cmd->option[1], 0, tmp, current));
 	}
 	else
 	{
 		while (tmp)
 		{
 			if (ft_strncmp(tmp->var, "HOME", 4) == 0)
-				break ;
+			{
+				str = ft_strdup((tmp->var + 5));
+				if (chdir(str) < 0)
+					return (no_directory(str));
+				free(str);
+				return (0);
+			}
 			tmp = tmp->next;
 		}
-		if (ft_strncmp(tmp->var, "HOME", 4) == 0)
-		{
-			str = ft_strdup((tmp->var + 5));
-			chdir(str);
-			free(str);
-		}
-		return (0);
+		write (2, "minishell: cd: HOME not set", 27);
+		return (1);
 	}
 }
-
-// cd 에서 $PWD $OLDPWD 를 바꾸어 주어야함

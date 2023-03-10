@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include "../process.h"
 
+void	set_signal_ignore(void);
+
 void	set_process(t_process *process, t_cmd *cmd, t_env *env)
 {
 	process->cmd = cmd;
@@ -99,6 +101,7 @@ int	create_process(t_cmd *cmd, t_env *env, t_current *current)
 {
 	t_process	process;
 
+	set_signal_ignore();
 	here_doc_file(cmd, env);
 	set_process(&process, cmd, env);
 	if (process.count == 1 && cmd->option[0] != NULL

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:30:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 15:55:48 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:05:15 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	cnt_except_quote(char *str)
 	return (count);
 }
 
-
 void	insert_except_quote(char *prev, char *str)
 {
 	int	quote_flag;
@@ -47,7 +46,6 @@ void	insert_except_quote(char *prev, char *str)
 		prev++;
 	}
 }
-
 
 void	delete_quote_util(char **str)
 {

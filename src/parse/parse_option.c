@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:05:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:56:16 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:05:04 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	op_word_count(char **option, char *sep_pipe, int quote_flag, int op_num)
 		}
 	}
 }
-
 
 void	put_option(char **option, char *sep_pipe, int quote_flag, int op_num)
 {
