@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   print_error2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/10 11:16:29 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:04:36 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/10 14:03:32 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/10 14:04:20 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <unistd.h>
+#include "../../libft/libft.h"
 
-void	handler(int signum)
+void	error_open(char *name)
 {
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
+	write(2, "minishell: ", 11);
+	perror(name);
+	exit(EXIT_FAILURE);
 }
 
-void	setsignal(void)
+void	error_access(char *cmd)
 {
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
+	write(2, "minishell: ", 11);
+	perror(cmd);
+	exit(127);
 }
 
-void	setsignal_ignored(void)
+void	error_cmd_not_found(char *cmd)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": command not found\n", 20);
+	exit (127);
 }

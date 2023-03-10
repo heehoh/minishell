@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:02:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/09 18:17:54 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:05:20 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	cmd_lstadd_back(t_cmd *lst, t_cmd *new)
 		lst = lst->next;
 	lst->next = new;
 }
-
 
 t_cmd	*parse_input(char *input, t_env *env, int status)
 {

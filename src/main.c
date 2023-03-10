@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 13:19:10 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 13:59:29 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,17 @@ void	init_pwd(t_env *env, t_current *current)
 
 void	init_setting(char **env, t_env **env_list, t_current *current)
 {
-	t_env	*node;
-
 	*env_list = get_env_list(env);
 	current->path = (char *)malloc(sizeof(char) * 4096);
 	if (current->path == NULL)
 		error_malloc();
-	if (getcwd(current->path, 4096))
+	if (getcwd(current->path, 4096) == NULL)
 	{
 		perror(INITERR);
 		current->path[0] = '\0';
 	}
 	else
-		init_pwd(env, current);
+		init_pwd(*env_list, current);
 	current->status = 0;
 }
 

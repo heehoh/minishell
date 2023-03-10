@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 10:54:53 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 13:59:48 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_current
 # define CMDFLAG 0
 # define FILEFLAG 1
 # define INITERR "shell-init: error retrieving current directory: \
-				getcwd: cannot access parent directories"
+getcwd: cannot access parent directories"
 # define MINISHELL "\033[32mminishell$ \033[0m"
 
 t_cmd	*parse_input(char *str, t_env *env, int status);
