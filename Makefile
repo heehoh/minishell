@@ -13,6 +13,7 @@ SRCS = main.c \
 	   /execution/here_doc.c \
 	   /execution/process_util.c \
 	   /error/print_error.c \
+	   /error/print_error2.c \
 	   /error/syntax_error.c \
 	   /builtin/builtin_cd.c \
 	   /builtin/builtin_echo.c \
@@ -22,7 +23,9 @@ SRCS = main.c \
 	   /builtin/builtin_pwd.c \
 	   /builtin/builtin_unset.c \
 	   /builtin/is_builtin.c \
-	   /env/env.c
+	   /builtin/builtin_error.c \
+	   /env/env.c \
+	   /signal/signal.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -32,7 +35,8 @@ OBJ_DIRS = obj/parse \
 		   obj/execution \
 		   obj/builtin \
 		   obj/env \
-		   obj/error 
+		   obj/error \
+		   obj/signal
 
 SRC_DIR = src
 

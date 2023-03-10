@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 13:59:29 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:39:08 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "minishell.h"
 #include "process.h"
 #include "../libft/libft.h"
+
+void	set_signal(void);
 
 void	exit_minishell(t_env *env, t_current *current)
 {
@@ -79,6 +81,7 @@ void	init_setting(char **env, t_env **env_list, t_current *current)
 	else
 		init_pwd(*env_list, current);
 	current->status = 0;
+	set_signal();
 }
 
 int	main(int argc, __attribute__((unused))char **argv, char **env)
@@ -105,5 +108,6 @@ int	main(int argc, __attribute__((unused))char **argv, char **env)
 		cmd = parse_input(input, env_list, current.status);
 		current.status = create_process(cmd, env_list, &current);
 		cmd_clear(cmd);
+		rl_on_new_line();
 	}
 }

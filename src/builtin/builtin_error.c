@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 14:18:53 by hujeong          ###   ########.fr       */
+/*   Created: 2023/03/10 14:23:35 by hujeong           #+#    #+#             */
+/*   Updated: 2023/03/10 14:28:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "../../libft/libft.h"
-#include "../minishell.h"
-#include <stdio.h>
 
-int	builtin_env(t_cmd *cmd, t_env *tmp)
+int	no_file_directory(char *str)
 {
-	int	i;
+	write(2, "minishell: cd: ", 15);
+	write(2, str, ft_strlen(str));
+	write(2, ": No such file or directory\n", 28);
+	return (0);
+}
 
-	if (cmd->option[1] == NULL)
-	{
-		while (tmp)
-		{
-			i = 0;
-			while (tmp->var[i])
-			{
-				if (tmp->var[i] == '=')
-					break ;
-				i++;
-			}
-			if (tmp->var[i] == '=')
-				printf("%s\n", tmp->var);
-			tmp = tmp->next;
-		}
-		return (0);
-	}
-	else
-	{
-		write(2, "env with no options or arguments\n", 33);
-		return (1);
-	}
+int	no_directory(char *str)
+{
+	write(2, "minishell: cd: ", 15);
+	write(2, str, ft_strlen(str));
+	write(2, ": Not a directory\n", 18);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 13:59:48 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:15:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	error_open(char *name);
 void	error_access(char *cmd);
 void	error_cmd_not_found(char *cmd);
 
-int		builtin_cd(t_cmd *cmd, t_env *tmp);
+int		builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current);
 int		builtin_echo(t_cmd *cmd);
 int		builtin_env(t_cmd *cmd, t_env *tmp);
 void	builtin_exit(t_cmd *cmd, int count);
