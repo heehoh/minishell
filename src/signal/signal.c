@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <signal.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -20,17 +19,20 @@ void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		printf("\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
 void	set_signal(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setsignal_ignored(void)
+void	set_signal_ignore(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

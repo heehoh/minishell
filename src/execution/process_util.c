@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void	set_signal(void);
+
 int	cmd_count(t_cmd *cmd)
 {
 	int	count;
@@ -54,6 +56,7 @@ int	wait_process(int count, pid_t *pid)
 		++i;
 	}
 	free(pid);
+	set_signal();
 	status = (status >> 8) & 0xff;
 	return (status);
 }

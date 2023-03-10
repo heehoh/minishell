@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "minishell.h"
 #include "process.h"
 #include "../libft/libft.h"

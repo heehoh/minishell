@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 
 void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 {
@@ -91,5 +92,7 @@ void	execute_process(t_process *process,
 				process->count, current));
 	command = get_command(process->cmd->option[0], process->env);
 	env = get_env_array(process->env);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	execve(command, process->cmd->option, env);
 }
