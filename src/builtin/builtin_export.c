@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:09:23 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:53:07 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,26 @@
 
 int	read_env(t_env *env)
 {
+	int	i;
+
 	while (env)
 	{
+		i = 0;
 		printf("declare -x ");
-		printf("%s\n", env->var);
+		while (env->var[i] != '=' && env->var[i])
+		{
+			printf("%c", env->var[i]);
+			i++;
+		}
+		if (env->var[i])
+			printf("%c\'", env->var[i]);
+		i++;
+		while (env->var[i])
+		{
+			printf("%c", env->var[i]);
+			i++;
+		}
+		printf("\'\n");
 		env = env->next;
 	}
 	return (0);
@@ -56,24 +72,32 @@ int	rule_env(char *str, t_env *tmp)
 	return (1);
 }
 
-int	builtin_export(t_cmd *cmd, t_env *env)
+int	not_valid_export(char *str)
 {
-	int		i;
+	if (str[0] == '_')
+		return (1);
+	write(2, "export: ", 8);
+	write(2, str, ft_strlen(str));
+	write(2, ": not a valid identifier\n", 25);
+	return (1);
+}
+
+int	builtin_export(t_cmd *cmd, t_env *env, int i, int j)
+{
 	t_env	*node;
 
-	i = 0;
 	if (cmd->option[1] == NULL)
 		return (read_env(env));
-	if (ft_isalpha(cmd->option[1][0]) == 0)
-	{
-		printf("export: \'%s\': not a valid identifier\n", cmd->option[1]);
-		return (1);
-	}
 	node = (env);
 	while (node->next)
 		node = node->next;
 	while (cmd->option[++i])
 	{
+		if (ft_isalpha(cmd->option[i][0]) == 0)
+		{
+			j = not_valid_export(cmd->option[i]);
+			continue ;
+		}
 		if (rule_env(cmd->option[i], env) == 1)
 		{
 			node->next = malloc(sizeof(t_env));
@@ -84,5 +108,5 @@ int	builtin_export(t_cmd *cmd, t_env *env)
 			node = node->next;
 		}
 	}
-	return (0);
+	return (j);
 }

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:15:17 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:50:12 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,29 @@ void	set_pid_pipe(pid_t **pid, int **fd, int count)
 		*fd = NULL;
 }
 
-void	create_process_util(t_process *process, int *fd, int i)
+void	create_process_util(t_process *process, int *fd, int i,
+	t_current *current)
 {
 	if (process->count == 1)
-		execute_process(process, STDIN_FILENO, STDOUT_FILENO);
+		execute_process(process, STDIN_FILENO, STDOUT_FILENO, current);
 	else if (i == 0)
 	{
 		close_pipe(fd, process->count, STDIN_FILENO, fd[1]);
-		execute_process(process, STDIN_FILENO, fd[1]);
+		execute_process(process, STDIN_FILENO, fd[1], current);
 	}
 	else if (i == process->count - 1)
 	{
 		close_pipe(fd, process->count, fd[2 * (i - 1)], STDOUT_FILENO);
-		execute_process(process, fd[2 * (i - 1)], STDOUT_FILENO);
+		execute_process(process, fd[2 * (i - 1)], STDOUT_FILENO, current);
 	}
 	else
 	{
 		close_pipe(fd, process->count, fd[2 * (i - 1)], fd[2 * i + 1]);
-		execute_process(process, fd[2 * (i - 1)], fd[2 * i + 1]);
+		execute_process(process, fd[2 * (i - 1)], fd[2 * i + 1], current);
 	}
 }
 
-int	create_process_loop(t_process *process)
+int	create_process_loop(t_process *process, t_current *current)
 {
 	pid_t	*pid;
 	int		*fd;
@@ -85,7 +86,7 @@ int	create_process_loop(t_process *process)
 			error_fork();
 		}
 		else if (pid[i] == 0)
-			create_process_util(process, fd, i);
+			create_process_util(process, fd, i, current);
 		process->cmd = process->cmd->next;
 		++i;
 	}
@@ -102,6 +103,7 @@ int	create_process(t_cmd *cmd, t_env *env, t_current *current)
 	set_process(&process, cmd, env);
 	if (process.count == 1 && cmd->option[0] != NULL
 		&& is_builtin(cmd->option[0]))
-		return (execute_parent_process(&process, STDIN_FILENO, STDOUT_FILENO, current));
-	return (create_process_loop(&process));
+		return (execute_parent_process(&process,
+				STDIN_FILENO, STDOUT_FILENO, current));
+	return (create_process_loop(&process, current));
 }

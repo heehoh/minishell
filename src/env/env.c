@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:38:22 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:37:29 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:45:39 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_env	*get_env_list_util(char *env_var)
 		env_node->var = ft_strdup(env_var);
 	if (env_node->var == NULL)
 		error_malloc();
+	env_node->next = NULL;
 	return (env_node);
 }
 
@@ -45,27 +46,43 @@ t_env	*get_env_list(char **env)
 		node->next = get_env_list_util(env[i]);
 		node = node->next;
 	}
-	node->next = NULL;
 	return (env_list);
+}
+
+char	**env_array_size(t_env *env)
+{
+	size_t	count;
+	char	**env_array;
+
+	count = 0;
+	while (env)
+	{
+		env = env->next;
+		++count;
+	}
+	env_array = (char **)malloc(sizeof(char *) * (count + 1));
+	if (env_array == NULL)
+		error_malloc();
+	return (env_array);
 }
 
 char	**get_env_array(t_env *env)
 {
-	size_t	count;
-	t_env	*node;
 	char	**env_array;
+	int		i;
 
-	node = env;
-	count = 0;
-	while (node)
-	{
-		node = node->next;
-		++count;
-	}
-	if (count > 0)
-		env_array = (char **)malloc(sizeof(char *) * (count + 1));
-	else
+	if (env->var[0] == '\0')
 		return (NULL);
-	if (env_array == NULL)
-		error_malloc();
+	env_array = env_array_size(env);
+	i = 0;
+	while (env)
+	{
+		env_array[i] = ft_strdup(env->var);
+		if (env_array[i] == NULL)
+			error_malloc();
+		++i;
+		env = env->next;
+	}
+	env_array[i] = NULL;
+	return (env_array);
 }

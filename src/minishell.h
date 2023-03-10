@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:39:01 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:54:53 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	**parse_cmd_option(char *sep_pipe);
 void	replace_env(char **sep_pipe, t_env *env, int status);
 void	delete_quote(t_cmd *cmd);
 t_env	*get_env_list(char **env);
+char	**get_env_array(t_env *env);
 void	is_cmd_or_file(char **sep_pipe, int *flag);
 int		flag_quote(char *sep_pipe, int *quote_flag);
 void	cmd_clear(t_cmd *cmd);
@@ -59,7 +60,7 @@ int		num_env_exit(int *count, int status);
 int		put_env_exit(char *change, int *count, int status);
 
 int		is_builtin(char *command);
-int		builtin_process(t_cmd *cmd, t_env *env, t_current *current);
+int		builtin_process(t_cmd *cmd, t_env *env, int count, t_current *current);
 
 int		syntax_error(char *input, int quote_flag, int cmd_flag);
 void	error_malloc(void);
@@ -72,9 +73,9 @@ void	error_cmd_not_found(char *cmd);
 int		builtin_cd(t_cmd *cmd, t_env *tmp);
 int		builtin_echo(t_cmd *cmd);
 int		builtin_env(t_cmd *cmd, t_env *tmp);
-void	builtin_exit(t_cmd *cmd);
-int		builtin_export(t_cmd *cmd, t_env *env);
-int		builtin_pwd(void);
-int		builtin_unset(t_cmd *cmd, t_env *env, int i);
+void	builtin_exit(t_cmd *cmd, int count);
+int		builtin_export(t_cmd *cmd, t_env *env, int i, int j);
+int		builtin_pwd(t_current *current);
+int		builtin_unset(t_cmd *cmd, t_env *env, int i, int j);
 
 #endif

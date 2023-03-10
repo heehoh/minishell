@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:39:00 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:48:00 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	execute_parent_process(t_process *process,
 	return (status);
 }
 
-void	execute_process(t_process *process, int read_fd, int write_fd)
+void	execute_process(t_process *process,
+	int read_fd, int write_fd, t_current *current)
 {
 	char	*command;
 	char	**env;
@@ -90,8 +91,8 @@ void	execute_process(t_process *process, int read_fd, int write_fd)
 	if (process->cmd->option[0] == NULL)
 		exit(0);
 	if (is_builtin(process->cmd->option[0]))
-		exit(builtin_process(process->cmd, process->env));
+		exit(builtin_process(process->cmd, process->env, current));
 	command = get_command(process->cmd->option[0], process->env);
-	env = env_for_execve(process->env);
-	execve(command, process->cmd->option, NULL);
+	env = get_env_array(process->env);
+	execve(command, process->cmd->option, env);
 }

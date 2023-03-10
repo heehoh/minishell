@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:23:55 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:16:50 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:48:31 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	close_pipe(int *fd, int process_count, int read_fd, int write_fd);
 void	open_file(t_cmd *cmd, int *read_fd, int *write_fd);
 int		wait_process(int count, pid_t *pid);
 void	here_doc_file(t_cmd *cmd, t_env *env);
-void	execute_process(t_process *process, int read_fd, int write_fd);
+void	execute_process(t_process *process, int read_fd,
+			int write_fd, t_current *current);
 int		execute_parent_process(t_process *process,
 			int read_fd, int write_fd, t_current *current);
 int		create_process(t_cmd *cmd, t_env *env, t_current *current);

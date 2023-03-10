@@ -6,32 +6,30 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 14:07:45 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:56:07 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../libft/libft.h"
+#include "../minishell.h"
 
-#define PATH_MAX 4096
-
-int	builtin_pwd(void)
+int	builtin_pwd(t_current *current)
 {
-	char	*path;
-
-	path = (char *)malloc(sizeof(char) * PATH_MAX);
-	if (path == NULL)
+	if (current->path == NULL)
 	{
-		perror("pwd error");
-		exit(1);
-	}
-	if (getcwd(path, PATH_MAX))
-	{
-		write(STDOUT_FILENO, path, ft_strlen(path));
-		write(STDOUT_FILENO, "\n", 1);
+		write(2, "pwd: error retrieving current directory:", 40);
+		if (getcwd(current->path, 4096) == NULL)
+		{
+			write(2, "getcwd: cannot access parent directories", 41);
+			write(2, ": No such file or directory\n", 28);
+			return (1);
+		}
+		write(1, current->path, ft_strlen(current->path));
 	}
 	else
-		perror("pwd error");
-	free(path);
+		write(1, current->path, ft_strlen(current->path));
+	write(1, "\n", 1);
 	return (0);
 }
+
