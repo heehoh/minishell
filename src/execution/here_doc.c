@@ -15,11 +15,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../../libft/libft.h"
-#include "../minishell.h"
+#include "../minishell.h" 
+#include <dirent.h>
 
 char	*get_tmp_dir(t_env *env)
 {
 	char	*tmp_dir;
+	DIR		*dir_info;
 
 	while (env)
 	{
@@ -30,6 +32,10 @@ char	*get_tmp_dir(t_env *env)
 	if (env != NULL)
 	{
 		tmp_dir = ft_strdup(env->var + 7);
+		dir_info = opendir(tmp_dir);
+		if (dir_info == NULL)
+			return (NULL);
+		closedir(dir_info);
 		if (tmp_dir == NULL)
 			error_malloc();
 		return (tmp_dir);
@@ -105,5 +111,6 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 			++file_count;
 		}
 		cmd = cmd->next;
+		++cmd_count;
 	}
 }

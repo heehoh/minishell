@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "minishell.h"
 #include "process.h"
 #include "../libft/libft.h"
 
@@ -36,10 +35,19 @@ void	exit_minishell(t_env *env, t_current *current)
 	exit(0);
 }
 
-int	free_input(char *input)
+int	input_check(char *input)
 {
-	free(input);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (input[i] == ' ')
+		++i;
+	if (input[i] == '\0')
+	{
+		free(input);
+		return (1);
+	}
+	return (0);
 }
 
 void	init_pwd(t_env *env, t_current *current)
@@ -100,12 +108,15 @@ int	main(int argc, __attribute__((unused))char **argv, char **env)
 		input = readline(MINISHELL);
 		if (input == NULL)
 			exit_minishell(env_list, &current);
-		if (input[0] == '\0' && free_input(input))
+		if (input_check(input))
 			continue ;
 		add_history(input);
-		current.status = syntax_error(input, 0, 0);
-		if (current.status == 258 && free_input(input))
+		if (syntax_error(input, 0, 0))
+		{
+			current.status = 258;
+			free(input);
 			continue ;
+		}
 		cmd = parse_input(input, env_list, current.status);
 		current.status = create_process(cmd, env_list, &current);
 		cmd_clear(cmd);
