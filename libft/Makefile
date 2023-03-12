@@ -16,26 +16,24 @@ OBJS = $(SRCS:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
+
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(AR) crs $(NAME) $(OBJS)
+	@$(AR) crs $(NAME) $(OBJS)
+	@echo "\033[31mmake libft\033[0m"
 
 %.o : %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+	@$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(OBJS)
-
+	@rm -f $(OBJS)
 .PHONY : clean
 
 fclean : clean
-	rm -f $(NAME)
-
+	@rm -f $(NAME)
 .PHONY : fclean
 
-re :
-	make fclean
-	make all
-
+re : fclean
+	@make all
 .PHONY : re

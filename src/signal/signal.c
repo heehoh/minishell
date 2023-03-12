@@ -13,8 +13,9 @@
 #include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
-#include <readline/history.h>
+#include <termios.h>
 
+/*ctrl c exit code 1*/
 void	handler(int signum)
 {
 	if (signum == SIGINT)
@@ -26,8 +27,18 @@ void	handler(int signum)
 	}
 }
 
+void	set_terminal_print_off(void)
+{
+	struct termios	terminal;
+
+	tcgetattr(1, &terminal);
+	terminal.c_lflag &= ~(ECHOCTL);
+	tcsetattr(1, 0, &terminal);
+}
+
 void	set_signal(void)
 {
+	set_terminal_print_off();
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 }

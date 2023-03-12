@@ -54,27 +54,30 @@ LIBFT = libft/libft.a
 all : $(NAME)
 
 $(LIBFT) :
-	make -C libft
+	@make -C libft
 
 $(OBJ_DIRS) :
-	mkdir -p $(OBJ_DIRS)
+	@mkdir -p $(OBJ_DIRS)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIRS)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDE)
 
 $(NAME) : $(OBJS_FILES) $(LIBFT)
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJS_FILES) -o $(NAME)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS_FILES) -o $(NAME)
+	@echo "\033[31mmake minishell\033[0m"
 
 clean :
-	make -C libft clean
-	rm -rf $(OBJ_DIR)
+	@make -C libft clean
+	@rm -rf $(OBJ_DIR)
+	@echo "\033[33mclean obj\033[0m"
 .PHONY : clean
 
 fclean : clean
-	rm -rf $(LIBFT)
-	rm -rf $(NAME)
+	@rm -rf $(LIBFT)
+	@rm -rf $(NAME)
+	@echo "\033[33mremove minishell\033[0m"
 .PHONY : fclean
 
 re : fclean
-	make all
+	@make all
 .PHONY : re
