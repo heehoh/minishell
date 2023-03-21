@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:15:55 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/21 09:57:06 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_current
 getcwd: cannot access parent directories"
 # define MINISHELL "\033[32mminishell$ \033[0m"
 
+
+void	init_setting(char **env, t_env **env_list, t_current *current);
 t_cmd	*parse_input(char *str, t_env *env, int status);
 t_file	*parse_file(char *sep_pipe);
 char	**parse_cmd_option(char *sep_pipe);

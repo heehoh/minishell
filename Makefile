@@ -1,5 +1,6 @@
 NAME = minishell
 SRCS = main.c \
+	   init_setting.c \
 	   /parse/parse_cmd.c \
 	   /parse/parse_env.c \
 	   /parse/parse_exit_code.c \
