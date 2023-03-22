@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 10:06:34 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:21 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ typedef struct s_current
 {
 	char				*path;
 	int					status;
-	struct sigaction	new_act;
-	struct sigaction	old_act;
 }	t_current;
 
 # define CMDFLAG 0

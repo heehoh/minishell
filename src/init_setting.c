@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:55:44 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 10:16:56 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:39 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <stdio.h>
 
-void	set_signal(t_current *current);
+void	set_signal(void);
 
 void	init_pwd(t_env *env, t_current *current)
 {
@@ -56,5 +56,5 @@ void	init_setting(char **env, t_env **env_list, t_current *current)
 	else
 		init_pwd(*env_list, current);
 	current->status = 0;
-	set_signal(current);
+	set_signal();
 }
