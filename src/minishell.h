@@ -6,12 +6,14 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/21 09:57:06 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 10:06:34 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include <signal.h>
 
 typedef struct s_env
 {
@@ -34,8 +36,10 @@ typedef struct s_cmd
 
 typedef struct s_current
 {
-	char	*path;
-	int		status;
+	char				*path;
+	int					status;
+	struct sigaction	new_act;
+	struct sigaction	old_act;
 }	t_current;
 
 # define CMDFLAG 0
@@ -43,7 +47,6 @@ typedef struct s_current
 # define INITERR "shell-init: error retrieving current directory: \
 getcwd: cannot access parent directories"
 # define MINISHELL "\033[32mminishell$ \033[0m"
-
 
 void	init_setting(char **env, t_env **env_list, t_current *current);
 t_cmd	*parse_input(char *str, t_env *env, int status);

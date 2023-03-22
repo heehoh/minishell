@@ -6,17 +6,17 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 11:16:29 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:22:01 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 10:38:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <termios.h>
+#include "../minishell.h"
 
 /*ctrl c exit code 1*/
-void	handler(int signum)
+void	handler(int signum, siginfo_t *info, void )
 {
 	if (signum == SIGINT)
 	{
@@ -27,18 +27,9 @@ void	handler(int signum)
 	}
 }
 
-void	set_terminal_print_off(void)
+void	set_signal(t_current *current)
 {
-	struct termios	terminal;
-
-	tcgetattr(1, &terminal);
-	terminal.c_lflag &= ~(ECHOCTL);
-	tcsetattr(1, 0, &terminal);
-}
-
-void	set_signal(void)
-{
-	set_terminal_print_off();
+	current->new_act.__sigaction_u.__sa_sigaction = action;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 }
