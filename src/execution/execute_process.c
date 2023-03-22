@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 11:03:56 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 16:31:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+
+void	set_terminal_print_on(void);
+void	set_signal(void);
 
 void	open_file_util(int i, t_cmd *cmd, int *read_fd, int *write_fd)
 {
@@ -58,6 +61,7 @@ int	execute_parent_process(t_process *process,
 {
 	int	status;
 
+	set_signal();
 	open_file(process->cmd, &read_fd, &write_fd);
 	status = builtin_process(process->cmd, process->env,
 			process->count, current);
@@ -94,5 +98,6 @@ void	execute_process(t_process *process,
 	env = get_env_array(process->env);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	set_terminal_print_on();
 	execve(command, process->cmd->option, env);
 }

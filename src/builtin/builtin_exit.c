@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 14:05:40 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:55:23 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+void	set_terminal_print_on(void);
 
 void	not_num(char *str)
 {
@@ -25,6 +27,7 @@ void	not_num(char *str)
 
 void	builtin_exit(t_cmd *cmd, int count)
 {
+	set_terminal_print_on();
 	if (count == 1)
 		write(1, "exit\n", 5);
 	if (cmd->option[1] == NULL)

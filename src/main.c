@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/21 13:45:52 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:16:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "process.h"
+
+void	set_terminal_print_on(void);
 
 void	exit_minishell(t_env *env, t_current *current)
 {
@@ -29,6 +31,7 @@ void	exit_minishell(t_env *env, t_current *current)
 		env = tem;
 	}
 	write(1, "exit\n", 5);
+	set_terminal_print_on();
 	exit(0);
 }
 

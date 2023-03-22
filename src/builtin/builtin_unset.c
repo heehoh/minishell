@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 10:46:11 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:16:02 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_env(t_env *env, t_env *tmp, int i)
 		env = tmp->next;
 	if (i == 2)
 		env->next = tmp->next;
+	free(tmp->var);
 	free (tmp);
 }
 
@@ -68,10 +69,10 @@ int	builtin_unset(t_cmd *cmd, t_env *env, int i, int j)
 		{
 			pre_tmp = tmp;
 			tmp = tmp->next;
-			if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
-				break ;
+			if (tmp != NULL
+				&& ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
+				free_env(pre_tmp, tmp, 2);
 		}
-		free_env(pre_tmp, tmp, 2);
 	}
 	return (j);
 }
