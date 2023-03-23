@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 17:24:21 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:25:30 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ char	*get_tmp_dir(t_env *env)
 	if (env != NULL)
 	{
 		tmp_dir = ft_strdup(env->var + 7);
+		if (tmp_dir == NULL)
+			error_malloc();
 		dir_info = opendir(tmp_dir);
 		if (dir_info == NULL)
 			return (NULL);
-		closedir(dir_info);
-		if (tmp_dir == NULL)
-			error_malloc();
+		if (closedir(dir_info) == -1)
+			perror("minishell: heredoc close error");
 		return (tmp_dir);
 	}
 	return (NULL);
