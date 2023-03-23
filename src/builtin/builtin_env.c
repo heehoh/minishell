@@ -6,15 +6,15 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 14:18:53 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:01:31 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
-#include "../minishell.h"
+#include "../process.h"
 #include <stdio.h>
 
-int	builtin_env(t_cmd *cmd, t_env *tmp)
+int	builtin_env(t_cmd *cmd, t_env *tmp, int write_fd)
 {
 	int	i;
 
@@ -26,11 +26,12 @@ int	builtin_env(t_cmd *cmd, t_env *tmp)
 			while (tmp->var[i])
 			{
 				if (tmp->var[i] == '=')
-					break ;
+				{
+					write(write_fd, tmp->var, ft_strlen(tmp->var));
+					write(write_fd, "\n", 1);
+				}
 				i++;
 			}
-			if (tmp->var[i] == '=')
-				printf("%s\n", tmp->var);
 			tmp = tmp->next;
 		}
 		return (0);

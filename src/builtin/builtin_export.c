@@ -6,37 +6,27 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 10:53:07 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:51:23 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
-#include "../minishell.h"
-#include <stdio.h>
+#include "../process.h"
 
-int	read_env(t_env *env)
+int	read_env(t_env *env, int write_fd)
 {
 	int	i;
 
 	while (env)
 	{
 		i = 0;
-		printf("declare -x ");
-		while (env->var[i] != '=' && env->var[i])
+		while (env)
 		{
-			printf("%c", env->var[i]);
-			i++;
+			write(write_fd, "declare -x ", 11);
+			write(write_fd, env->var, ft_strlen(env->var));
+			write(write_fd, "\n", 1);
+			env = env->next;
 		}
-		if (env->var[i])
-			printf("%c\'", env->var[i]);
-		i++;
-		while (env->var[i])
-		{
-			printf("%c", env->var[i]);
-			i++;
-		}
-		printf("\'\n");
-		env = env->next;
 	}
 	return (0);
 }
@@ -82,23 +72,22 @@ int	not_valid_export(char *str)
 	return (1);
 }
 
-int	builtin_export(t_cmd *cmd, t_env *env, int i, int j)
+int	builtin_export(t_process *process, int i, int j, int write_fd)
 {
 	t_env	*node;
+	t_cmd	*cmd;
 
+	cmd = process->cmd;
 	if (cmd->option[1] == NULL)
-		return (read_env(env));
-	node = (env);
+		return (read_env(process->env, write_fd));
+	node = (process->env);
 	while (node->next)
 		node = node->next;
 	while (cmd->option[++i])
 	{
 		if (ft_isalpha(cmd->option[i][0]) == 0)
-		{
 			j = not_valid_export(cmd->option[i]);
-			continue ;
-		}
-		if (rule_env(cmd->option[i], env) == 1)
+		else if (rule_env(cmd->option[i], process->env) == 1)
 		{
 			node->next = malloc(sizeof(t_env));
 			if (node->next == 0)

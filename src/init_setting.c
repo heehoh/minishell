@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:55:44 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:39 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:22:30 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	init_pwd(t_env *env, t_current *current)
 	}
 }
 
-void	init_setting(char **env, t_env **env_list, t_current *current)
+void	init_setting(char **env, t_current *current)
 {
-	*env_list = get_env_list(env);
+	current->env = get_env_list(env);
 	current->path = (char *)malloc(sizeof(char) * 4096);
 	if (current->path == NULL)
 		error_malloc();
@@ -54,7 +54,6 @@ void	init_setting(char **env, t_env **env_list, t_current *current)
 		current->path[0] = '\0';
 	}
 	else
-		init_pwd(*env_list, current);
-	current->status = 0;
+		init_pwd(current->env, current);
 	set_signal();
 }

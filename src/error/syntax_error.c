@@ -6,13 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 15:24:52 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:49:35 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "../../libft/libft.h"
-#include "../error.h"
+#include "error.h"
 
 int	flag_quote(char *sep_pipe, int *quote_flag);
 
@@ -59,12 +59,12 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 {
 	if (**input == '|')
 	{
-		++(*input);
-		while ((**input == ' ' || is_redir(**input)))
-			++(*input);
 		if (cmd_flag == 0)
 			return (write(2, SYNPIP, ft_strlen(SYNPIP)));
-		else if (**input == '\0')
+		++(*input);
+		while (**input == ' ')
+			++(*input);
+		if (**input == '\0')
 		{
 			write(2, "> ", 2);
 			return (write(2, SYNEND, ft_strlen(SYNEND)));
@@ -76,8 +76,6 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 			return (syntax_redir_error(*input - 1));
 		while (**input == ' ')
 			++(*input);
-		if (**input == '|')
-			return (write(2, SYNPIP, ft_strlen(SYNPIP)));
 		if (**input == '\0' || is_redir(**input))
 			return (syntax_redir_error(*input));
 	}

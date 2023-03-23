@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 15:16:16 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:25:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include <readline/history.h>
 #include "process.h"
 
+int		g_status;
 void	set_terminal_print_on(void);
 
-void	exit_minishell(t_env *env, t_current *current)
+void	exit_minishell(t_env *env, t_current *current, int num)
 {
 	t_env	*tem;
 
@@ -30,9 +31,8 @@ void	exit_minishell(t_env *env, t_current *current)
 		free(env);
 		env = tem;
 	}
-	write(1, "exit\n", 5);
 	set_terminal_print_on();
-	exit(0);
+	exit(num);
 }
 
 int	input_check(char *input)
@@ -50,7 +50,7 @@ int	input_check(char *input)
 	return (0);
 }
 
-void	minishell_loop(t_env *env_list, t_current *current)
+void	minishell_loop(t_current *current)
 {
 	char	*input;
 	t_cmd	*cmd;
@@ -59,30 +59,33 @@ void	minishell_loop(t_env *env_list, t_current *current)
 	{
 		input = readline(MINISHELL);
 		if (input == NULL)
-			exit_minishell(env_list, current);
+		{
+			write(1, "exit\n", 5);
+			exit_minishell(current->env, current, 0);
+		}
 		if (input_check(input))
 			continue ;
 		add_history(input);
 		if (syntax_error(input, 0, 0))
 		{
-			current->status = 258;
+			g_status = 258;
 			free(input);
 			continue ;
 		}
-		cmd = parse_input(input, env_list, current->status);
-		current->status = create_process(cmd, env_list, current);
+		cmd = parse_input(input, current->env, g_status);
+		g_status = create_process(cmd, current->env, current);
 		cmd_clear(cmd);
 		rl_on_new_line();
 	}
 }
 
-int	main(int argc, __attribute__((unused))char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_env		*env_list;
 	t_current	current;
 
-	if (argc != 1 && printf("Error: argument\n"))
+	g_status = 0;
+	if ((argc != 1 || argv[0] == NULL) && printf("Error: argument\n"))
 		return (1);
-	init_setting(env, &env_list, &current);
-	minishell_loop(env_list, &current);
+	init_setting(env, &current);
+	minishell_loop(&current);
 }

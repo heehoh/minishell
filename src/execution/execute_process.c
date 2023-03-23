@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 11:12:21 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:01:47 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	execute_parent_process(t_process *process,
 	if (read_fd != STDIN_FILENO)
 		close(read_fd);
 	if (write_fd != STDOUT_FILENO)
-		close(write_fd); 
+		close(write_fd);
 	return (status);
 }
 
@@ -90,8 +90,7 @@ void	execute_process(t_process *process,
 	if (process->cmd->option[0] == NULL)
 		exit(0);
 	if (is_builtin(process->cmd->option[0]))
-		exit(builtin_process(process->cmd, process->env,
-				process->count, current));
+		exit(builtin_process(process, current, 1));
 	command = get_command(process->cmd->option[0], process->env);
 	env = get_env_array(process->env);
 	signal(SIGINT, SIG_DFL);

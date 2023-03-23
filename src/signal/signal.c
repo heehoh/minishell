@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 11:16:29 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 16:30:38 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:26:11 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_status = 1;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -46,7 +47,6 @@ void	set_terminal_print_off(void)
 
 void	set_signal(void)
 {
-
 	set_terminal_print_off();
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);

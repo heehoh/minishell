@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:05:46 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:59:30 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../libft/libft.h"
 #include "../minishell.h"
 
-int	builtin_pwd(t_current *current)
+int	builtin_pwd(t_current *current, int write_fd)
 {
 	if (current->path[0] == '\0')
 	{
@@ -25,10 +25,10 @@ int	builtin_pwd(t_current *current)
 			write(2, ": No such file or directory\n", 28);
 			return (1);
 		}
-		write(1, current->path, ft_strlen(current->path));
+		write(write_fd, current->path, ft_strlen(current->path));
 	}
 	else
-		write(1, current->path, ft_strlen(current->path));
-	write(1, "\n", 1);
+		write(write_fd, current->path, ft_strlen(current->path));
+	write(write_fd, "\n", 1);
 	return (0);
 }
