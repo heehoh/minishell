@@ -6,14 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 16:31:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:12:21 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../process.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <signal.h>
 
 void	set_terminal_print_on(void);
@@ -63,12 +62,11 @@ int	execute_parent_process(t_process *process,
 
 	set_signal();
 	open_file(process->cmd, &read_fd, &write_fd);
-	status = builtin_process(process->cmd, process->env,
-			process->count, current);
+	status = builtin_process(process, current, write_fd);
 	if (read_fd != STDIN_FILENO)
 		close(read_fd);
 	if (write_fd != STDOUT_FILENO)
-		close(write_fd);
+		close(write_fd); 
 	return (status);
 }
 

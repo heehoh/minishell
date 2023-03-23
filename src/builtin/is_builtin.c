@@ -6,11 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:02:46 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 10:46:02 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:08:01 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
+#include "../process.h"
 #include "../minishell.h"
 
 int	is_builtin(char *command)
@@ -32,21 +33,24 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-int	builtin_process(t_cmd *cmd, t_env *env, int count, t_current *current)
+int	builtin_process(t_process *process, t_current *current, int write_fd)
 {
-	if (ft_strncmp((cmd->option[0]), "cd", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_cd(cmd, env, current));
-	if (ft_strncmp((cmd->option[0]), "echo", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_echo(cmd));
-	if (ft_strncmp((cmd->option[0]), "env", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_env(cmd, env));
-	if (ft_strncmp((cmd->option[0]), "export", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_export(cmd, env, 0, 0));
-	if (ft_strncmp((cmd->option[0]), "pwd", ft_strlen(cmd->option[0])) == 0)
+	char	*cmd;
+
+	cmd = process->cmd->option[0];
+	if (ft_strncmp(cmd, "cd", ft_strlen(cmd)) == 0)
+		return (builtin_cd(procces->cmd, process->env, current));
+	if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
+		return (builtin_echo(process->cmd));
+	if (ft_strncmp(cmd, "env", ft_strlen(cmd)) == 0)
+		return (builtin_env(process->cmd, process->env, write_fd));
+	if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0)
+		return (builtin_export(process->cmd, process->env, 0, 0));
+	if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)) == 0)
 		return (builtin_pwd(current));
-	if (ft_strncmp((cmd->option[0]), "unset", ft_strlen(cmd->option[0])) == 0)
-		return (builtin_unset(cmd, env, 0, 0));
-	if (ft_strncmp((cmd->option[0]), "exit", ft_strlen(cmd->option[0])) == 0)
+	if (ft_strncmp(cmd, "unset", ft_strlen(cmd)) == 0)
+		return (builtin_unset(process->cmd, process->env, 0, 0));
+	if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
 		builtin_exit(cmd, count);
 	return (0);
 }
