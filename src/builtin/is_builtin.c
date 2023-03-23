@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:02:46 by migo              #+#    #+#             */
-/*   Updated: 2023/03/23 11:08:01 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:26:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	builtin_process(t_process *process, t_current *current, int write_fd)
 	if (ft_strncmp(cmd, "env", ft_strlen(cmd)) == 0)
 		return (builtin_env(process->cmd, process->env, write_fd));
 	if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0)
-		return (builtin_export(process->cmd, process->env, 0, 0));
+		return (builtin_export(process->cmd, process->env, 0, 0)); // write_fd require
 	if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)) == 0)
-		return (builtin_pwd(current));
+		return (builtin_pwd(current, write_fd));
 	if (ft_strncmp(cmd, "unset", ft_strlen(cmd)) == 0)
-		return (builtin_unset(process->cmd, process->env, 0, 0));
+		return (builtin_unset(process, 0, 0));
 	if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
-		builtin_exit(cmd, count);
+		builtin_exit(process->cmd, process->count);
 	return (0);
 }
