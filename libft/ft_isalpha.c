@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:38:14 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:39:00 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 11:54:04 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isalpha(int c)
 {
-	if (65 <= c && c <= 90)
+	if ('a' <= c && c <= 'z')
 		return (1);
-	else if (97 <= c && c <= 122)
+	else if ('A' <= c && c <= 'Z')
 		return (1);
-	else
-		return (0);
+	else if (c == '_')
+		return (1);
 	return (0);
 }

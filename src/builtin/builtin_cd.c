@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 09:10:50 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 13:36:37 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ int		no_file_directory(char *str);
 
 int	rule_cd(char *str, char *path)
 {
-	int		fd;
-
-	fd = open(str, O_RDONLY);
-	if (fd < 0)
-		no_file_directory(str);
+	if (access(str, F_OK) != 0)
+		return (no_file_directory(str));
+	if (access(str, X_OK) != 0)
+	{
+		write(2, "cd: permission denied: ", 23);
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
+		return (0);
+	}
 	if (ft_strlen(str) + ft_strlen(path) > 1024)
 	{
 		write(2, "minishell: cd: path is too long\n", 32);
@@ -115,7 +119,7 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 	{
 		while (tmp)
 		{
-			if (ft_strncmp(tmp->var, "HOME", 4) == 0)
+			if (ft_strncmp(tmp->var, "HOME=", 5) == 0)
 			{
 				str = ft_strdup((tmp->var + 5));
 				if (chdir(str) < 0)

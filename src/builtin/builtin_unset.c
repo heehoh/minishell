@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/23 16:51:42 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:31:15 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../process.h"
+
+int	not_valid_unset(char *str);
 
 int	cp_env(char *str)
 {
@@ -24,7 +26,7 @@ int	cp_env(char *str)
 			break ;
 		i++;
 	}
-	return (i - 1);
+	return (i);
 }
 
 int	frist_env(t_process *process, t_env *tmp, t_current *current)
@@ -38,19 +40,20 @@ int	frist_env(t_process *process, t_env *tmp, t_current *current)
 
 void	free_env(t_env *env, t_env *tmp)
 {
-	env->next = tmp->next;
+	if (tmp->next == NULL)
+		env->next = NULL;
+	else
+		env->next = tmp->next;
 	free(tmp->var);
 	free(tmp);
 }
 
-int	not_valid_unset(char *str)
+int	is_env(char *option, char *env)
 {
-	if (str[0] == '_')
+	if (ft_strncmp(option, env, cp_env(env)) == 0
+		&& ft_strncmp(option, env, ft_strlen(option)) == 0)
 		return (1);
-	write(2, "unset: ", 8);
-	write(2, str, ft_strlen(str));
-	write(2, ": not a valid identifier\n", 25);
-	return (1);
+	return (0);
 }
 
 int	builtin_unset(t_process *process, int i, int j, t_current *current)
@@ -67,15 +70,14 @@ int	builtin_unset(t_process *process, int i, int j, t_current *current)
 		if (ft_isalpha(cmd->option[i][0]) == 0)
 			j = not_valid_unset(cmd->option[i]);
 		tmp = process->env;
-		if (ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0
+		if (is_env(cmd->option[i], tmp->var)
 			&& frist_env(process, tmp, current))
 			continue ;
 		while (tmp)
 		{
 			pre_tmp = tmp;
 			tmp = tmp->next;
-			if (tmp != NULL
-				&& ft_strncmp(cmd->option[i], tmp->var, cp_env(tmp->var)) == 0)
+			if (tmp != NULL && is_env(cmd->option[i], tmp->var))
 				free_env(pre_tmp, tmp);
 		}
 	}
