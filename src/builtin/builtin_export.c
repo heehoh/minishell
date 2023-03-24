@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 12:35:28 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/24 14:01:12 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	rule_env(char *str, t_env *tmp)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->var, str, same_env(tmp->var)) == 0
-			&& ft_strncmp(tmp->var, str, ft_strlen(str)) == 0)
+			&& ft_strncmp(tmp->var, str, same_env(str)) == 0)
 		{
 			if (ft_strlen(str) == same_env(str))
 				return (0);
