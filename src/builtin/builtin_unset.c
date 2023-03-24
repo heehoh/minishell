@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 17:14:51 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:17:52 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	frist_env(t_process *process, t_env *tmp, t_current *current)
 	return (1);
 }
 
-int free_env(t_env *env, t_env *tmp)
+int	free_env(t_env *env, t_env *tmp)
 {
 	if (tmp->next == NULL)
 		env->next = NULL;

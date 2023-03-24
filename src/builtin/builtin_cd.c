@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 18:14:54 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:17:43 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,8 @@ void	make_env(t_env *env, char *str)
 	env->next = tmp;
 }
 
-int	pwd(t_current *current, t_env *env, t_env *tmp)
+int	pwd(t_current *current, t_env *env, t_env *tmp, char *pwd)
 {
-	char	*pwd;
-
-	pwd = NULL;
 	if (rule_env("OLDPWD=", env) == 1)
 		make_env(env, "OLDPWD=");
 	while (env)
@@ -93,7 +90,7 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 		if (chdir(str) < 0)
 			return (no_directory(str));
 		else
-			return (pwd(current, env, env));
+			return (pwd(current, env, env, NULL));
 	}
 	while (current->path[i])
 		i++;
@@ -105,7 +102,7 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 	if (chdir(str) < 0)
 		return (no_directory(str));
 	else
-		return (pwd(current, env, env));
+		return (pwd(current, env, env, NULL));
 }
 
 int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)

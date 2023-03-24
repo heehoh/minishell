@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 17:35:54 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:18:06 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	fl_word_count(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_file);
-		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
+		while (*sep_pipe && (ft_is_space(*sep_pipe) == 0 || quote_flag))
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -128,8 +128,6 @@ void	put_file(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 		}
 	}
 }
-
-
 
 t_file	*parse_file(char *sep_pipe)
 {
