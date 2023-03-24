@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 16:49:35 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:34:19 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 		if (cmd_flag == 0)
 			return (write(2, SYNPIP, ft_strlen(SYNPIP)));
 		++(*input);
-		while (**input == ' ')
+		while (ft_is_space(**input))
 			++(*input);
 		if (**input == '\0')
 		{
@@ -74,7 +74,7 @@ int	syntax_error_util(char **input, char token, int cmd_flag)
 	{
 		if (is_redir(*(++(*input))) && token != *((*input)++))
 			return (syntax_redir_error(*input - 1));
-		while (**input == ' ')
+		while (ft_is_space(**input))
 			++(*input);
 		if (**input == '\0' || is_redir(**input))
 			return (syntax_redir_error(*input));
@@ -86,7 +86,7 @@ int	syntax_error(char *input, int quote_flag, int cmd_flag)
 {
 	while (*input)
 	{
-		while (*input == ' ')
+		while (ft_is_space(*input))
 			++input;
 		flag_quote(input, &quote_flag);
 		if (quote_flag == 0 && (is_redir(*input) || *input == '|'))

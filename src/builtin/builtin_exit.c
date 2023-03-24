@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/23 17:29:26 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:10:34 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	builtin_exit(t_cmd *cmd, int count, t_env *env, t_current *current)
 	if (cmd->option[2] != NULL)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-		num = 1;
+		return ;
 	}
 	cmd_clear(cmd);
 	exit_minishell(env, current, num);

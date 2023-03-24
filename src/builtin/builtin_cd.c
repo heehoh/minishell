@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 13:36:37 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/24 18:14:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	make_env(t_env *env, char *str)
 	env->next = tmp;
 }
 
-int	pwd(char *path, t_env *env, t_env *tmp)
+int	pwd(t_current *current, t_env *env, t_env *tmp)
 {
 	char	*pwd;
 
@@ -67,14 +67,15 @@ int	pwd(char *path, t_env *env, t_env *tmp)
 	if (pwd != NULL)
 		rule_env(pwd, tmp);
 	free(pwd);
-	if (getcwd(path, 1024) == NULL)
+	if (getcwd(current->path, 1024) == NULL)
 	{
 		write(2, "chdir: error retrieving current directory:", 40);
 		write(2, "getcwd: cannot access parent directories", 41);
 		write(2, ": No such file or directory\n", 28);
+		current->path[0] = '\0';
 		return (1);
 	}
-	pwd = ft_strjoin("PWD=", path);
+	pwd = ft_strjoin("PWD=", current->path);
 	rule_env(pwd, tmp);
 	free(pwd);
 	return (0);
@@ -92,7 +93,7 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 		if (chdir(str) < 0)
 			return (no_directory(str));
 		else
-			return (pwd(current->path, env, env));
+			return (pwd(current, env, env));
 	}
 	while (current->path[i])
 		i++;
@@ -104,7 +105,7 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 	if (chdir(str) < 0)
 		return (no_directory(str));
 	else
-		return (pwd(current->path, env, env));
+		return (pwd(current, env, env));
 }
 
 int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)

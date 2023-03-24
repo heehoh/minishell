@@ -6,10 +6,11 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 17:25:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:41:24 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -40,7 +41,7 @@ int	input_check(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i] == ' ')
+	while (ft_is_space(input[i]))
 		++i;
 	if (input[i] == '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 09:10:48 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:18:21 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	builtin_pwd(t_current *current, int write_fd)
 		{
 			write(2, "getcwd: cannot access parent directories", 41);
 			write(2, ": No such file or directory\n", 28);
+			current->path[0] = '\0';
 			return (1);
 		}
 		write(write_fd, current->path, ft_strlen(current->path));

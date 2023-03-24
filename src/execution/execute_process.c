@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 17:01:47 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:02:03 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void	execute_process(t_process *process,
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	set_terminal_print_on();
-	execve(command, process->cmd->option, env);
+	if (execve(command, process->cmd->option, env) == -1)
+		exit(0);
 }

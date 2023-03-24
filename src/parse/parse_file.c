@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:34:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/08 13:43:55 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:35:54 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	num_file(char *sep_pipe)
 	quote_flag = 0;
 	while (sep_pipe[i])
 	{
-		flag_quote(sep_pipe, &quote_flag);
+		flag_quote(&(sep_pipe[i]), &quote_flag);
 		if (sep_pipe[i] == '<' && quote_flag == 0)
 		{
 			if (sep_pipe[i + 1] == '<')
@@ -111,7 +111,7 @@ void	put_file(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 	{
 		file_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_file);
-		while ((*sep_pipe != ' ' && *sep_pipe) || quote_flag)
+		while ((ft_is_space(*sep_pipe) == 0 && *sep_pipe) || quote_flag)
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -128,6 +128,8 @@ void	put_file(t_file *file, char *sep_pipe, int quote_flag, int fl_num)
 		}
 	}
 }
+
+
 
 t_file	*parse_file(char *sep_pipe)
 {

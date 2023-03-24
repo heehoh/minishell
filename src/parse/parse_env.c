@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:22:47 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 18:33:49 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:35:26 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	num_env_word(char *str, t_env *env, int *count)
 	while (env)
 	{
 		i = 0;
-		while (str[i] && str[i] != ' ' && str[i] == env->var[i])
+		while (str[i] && ft_is_space(str[i]) == 0 && str[i] == env->var[i])
 			i++;
 		if (env->var[i] == '=' && ft_isalnum(str[i]))
 			*count += ft_strlen(&(env->var[i + 1]));
@@ -64,7 +64,7 @@ int	put_env_word(char *change, char *str, t_env *env, int *count)
 	while (env)
 	{
 		i = 0;
-		while (str[i] && str[i] != ' ' && str[i] == env->var[i])
+		while (str[i] && ft_is_space(str[i]) == 0 && str[i] == env->var[i])
 			i++;
 		if (env->var[i] == '=' && ft_isalnum(str[i]))
 		{

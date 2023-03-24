@@ -6,12 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:30:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:05:15 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 16:23:50 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	cnt_except_quote(char *str)
 {
@@ -53,7 +54,10 @@ void	delete_quote_util(char **str)
 	int		count;
 
 	prev = *str;
-	count = cnt_except_quote(*str);
+	if (*str != NULL)
+		count = cnt_except_quote(*str);
+	else
+		count = 0;
 	*str = malloc(sizeof(char) * (count + 1));
 	if (*str == NULL)
 		error_malloc();
@@ -77,6 +81,7 @@ void	delete_quote(t_cmd *cmd)
 		i = 0;
 		while (cmd->file[i].name)
 		{
+			printf("hi");
 			delete_quote_util(&(cmd->file[i].name));
 			++i;
 		}

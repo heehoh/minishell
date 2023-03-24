@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:19:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 12:31:15 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/24 17:14:51 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	frist_env(t_process *process, t_env *tmp, t_current *current)
 	return (1);
 }
 
-void	free_env(t_env *env, t_env *tmp)
+int free_env(t_env *env, t_env *tmp)
 {
 	if (tmp->next == NULL)
 		env->next = NULL;
@@ -46,6 +46,7 @@ void	free_env(t_env *env, t_env *tmp)
 		env->next = tmp->next;
 	free(tmp->var);
 	free(tmp);
+	return (1);
 }
 
 int	is_env(char *option, char *env)
@@ -77,8 +78,9 @@ int	builtin_unset(t_process *process, int i, int j, t_current *current)
 		{
 			pre_tmp = tmp;
 			tmp = tmp->next;
-			if (tmp != NULL && is_env(cmd->option[i], tmp->var))
-				free_env(pre_tmp, tmp);
+			if (tmp != NULL && is_env(cmd->option[i], tmp->var)
+				&& free_env(pre_tmp, tmp))
+				break ;
 		}
 	}
 	return (j);

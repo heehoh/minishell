@@ -6,17 +6,18 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:05:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 14:05:04 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:42:02 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../libft/libft.h"
 #include "../minishell.h"
 #include <stdlib.h>
 
 void	is_cmd_or_file(char **sep_pipe, int *flag)
 {
 	(*flag) = CMDFLAG;
-	while (**sep_pipe == ' ')
+	while (ft_is_space(**sep_pipe))
 		(*sep_pipe)++;
 	if (**sep_pipe == '<' || **sep_pipe == '>')
 	{
@@ -25,7 +26,7 @@ void	is_cmd_or_file(char **sep_pipe, int *flag)
 		(*flag) = FILEFLAG;
 		(*sep_pipe)++;
 	}
-	while (**sep_pipe == ' ')
+	while (ft_is_space(**sep_pipe))
 		(*sep_pipe)++;
 }
 
@@ -40,14 +41,14 @@ int	num_option(char *sep_pipe)
 	while (*sep_pipe)
 	{
 		is_cmd_or_file(&sep_pipe, &flag);
-		while ((*sep_pipe != ' ' && *sep_pipe) || quote_flag)
+		while ((ft_is_space(*sep_pipe) == 0 && *sep_pipe) || quote_flag)
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
 				break ;
 			sep_pipe++;
 		}
-		if (flag == 0 && sep_pipe[-1] != ' ')
+		if (flag == 0 && ft_is_space(sep_pipe[-1]) == 0)
 			count++;
 	}
 	return (count);
@@ -64,7 +65,7 @@ void	op_word_count(char **option, char *sep_pipe, int quote_flag, int op_num)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_cmd);
-		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
+		while ((*sep_pipe && ft_is_space(*sep_pipe) == 0) || quote_flag)
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)
@@ -93,7 +94,7 @@ void	put_option(char **option, char *sep_pipe, int quote_flag, int op_num)
 	{
 		word_count = 0;
 		is_cmd_or_file(&sep_pipe, &is_cmd);
-		while (*sep_pipe && (*sep_pipe != ' ' || quote_flag))
+		while (*sep_pipe && (ft_is_space(*sep_pipe) == 0 || quote_flag))
 		{
 			flag_quote(sep_pipe, &quote_flag);
 			if ((*sep_pipe == '<' || *sep_pipe == '>') && quote_flag == 0)

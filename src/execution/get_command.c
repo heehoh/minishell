@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:39:41 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 11:55:52 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:03:08 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,15 @@ char	*cmd_with_path(char *cmd, char **path)
 char	*get_command(char *cmd, t_env *env)
 {
 	int		i;
+	char	**path;
 
 	i = 0;
 	if (cmd[0] == '\0')
 		error_cmd_not_found(cmd);
+	path = get_path(env);
 	while (cmd[i])
 	{
-		if (cmd[i] == '/')
+		if (cmd[i] == '/' || path == NULL)
 		{
 			if (access(cmd, F_OK) == -1)
 				error_access(cmd);
@@ -96,5 +98,5 @@ char	*get_command(char *cmd, t_env *env)
 		}
 		++i;
 	}
-	return (cmd_with_path(cmd, get_path(env)));
+	return (cmd_with_path(cmd, path));
 }
