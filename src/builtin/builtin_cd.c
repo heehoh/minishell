@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/10 14:27:35 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/24 09:10:50 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	rule_cd(char *str, char *path)
 	fd = open(str, O_RDONLY);
 	if (fd < 0)
 		no_file_directory(str);
-	if (ft_strlen(str) + ft_strlen(path) > 4096)
+	if (ft_strlen(str) + ft_strlen(path) > 1024)
 	{
 		write(2, "minishell: cd: path is too long\n", 32);
 		return (0);
@@ -63,7 +63,7 @@ int	pwd(char *path, t_env *env, t_env *tmp)
 	if (pwd != NULL)
 		rule_env(pwd, tmp);
 	free(pwd);
-	if (getcwd(path, 4096) == NULL)
+	if (getcwd(path, 1024) == NULL)
 	{
 		write(2, "chdir: error retrieving current directory:", 40);
 		write(2, "getcwd: cannot access parent directories", 41);
