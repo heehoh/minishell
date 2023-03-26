@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:30:59 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 16:23:50 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/26 12:53:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	delete_quote(t_cmd *cmd)
 		i = 0;
 		while (cmd->file[i].name)
 		{
-			printf("hi");
 			delete_quote_util(&(cmd->file[i].name));
 			++i;
 		}
