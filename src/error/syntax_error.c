@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 17:34:19 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 10:45:44 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	syntax_error(char *input, int quote_flag, int cmd_flag)
 				return (258);
 			cmd_flag = 0;
 		}
+		else if (*input == '\0')
+			break ;
 		else
 		{
 			cmd_flag = 1;
