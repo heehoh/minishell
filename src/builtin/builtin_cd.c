@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 18:17:43 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 16:29:29 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ size_t	same_env(char *str);
 int		rule_env(char *str, t_env *tmp);
 int		no_directory(char *str);
 int		no_file_directory(char *str);
+void	not_have_path(void);
 
 int	rule_cd(char *str, char *path)
 {
@@ -53,6 +54,8 @@ void	make_env(t_env *env, char *str)
 
 int	pwd(t_current *current, t_env *env, t_env *tmp, char *pwd)
 {
+	char	path[1024];
+
 	if (rule_env("OLDPWD=", env) == 1)
 		make_env(env, "OLDPWD=");
 	while (env)
@@ -64,14 +67,12 @@ int	pwd(t_current *current, t_env *env, t_env *tmp, char *pwd)
 	if (pwd != NULL)
 		rule_env(pwd, tmp);
 	free(pwd);
-	if (getcwd(current->path, 1024) == NULL)
+	if (getcwd(path, 1024) == NULL)
 	{
-		write(2, "chdir: error retrieving current directory:", 40);
-		write(2, "getcwd: cannot access parent directories", 41);
-		write(2, ": No such file or directory\n", 28);
-		current->path[0] = '\0';
+		not_have_path();
 		return (1);
 	}
+	getcwd(current->path, 1024);
 	pwd = ft_strjoin("PWD=", current->path);
 	rule_env(pwd, tmp);
 	free(pwd);
@@ -94,8 +95,8 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 	}
 	while (current->path[i])
 		i++;
-	current->path[i] = '/';
-	i++;
+	if (str[0] != '.' || (current->path[0] != '\0' && current->path[0] != '.'))
+		current->path[i++] = '/';
 	while (str[j])
 		current->path[i++] = str[j++];
 	current->path[i] = str[j];

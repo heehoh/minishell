@@ -44,8 +44,7 @@ SRC_DIR = src
 OBJS_FILES = $(addprefix $(OBJ_DIR)/, $(OBJS))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
-#-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 LFLAGS = -lft -Llibft -lreadline \
 		 -L $(HOME)/goinfre/.brew/opt/readline/lib 
 

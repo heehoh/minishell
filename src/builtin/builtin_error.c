@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:23:35 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 13:38:38 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/27 15:05:43 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ int	not_valid_unset(char *str)
 	write(2, str, ft_strlen(str));
 	write(2, ": not a valid identifier\n", 25);
 	return (1);
+}
+
+void	not_have_path(void)
+{
+	write(2, "chdir: error retrieving current directory: ", 40);
+	write(2, "getcwd: cannot access parent directories", 41);
+	write(2, ": No such file or directory\n", 28);
 }

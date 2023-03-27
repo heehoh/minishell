@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:01:05 by migo              #+#    #+#             */
-/*   Updated: 2023/03/23 16:43:27 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 13:59:12 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	builtin_echo(t_cmd *cmd, int write_fd)
 	while (cmd->option[i])
 	{
 		write(write_fd, cmd->option[i], ft_strlen(cmd->option[i]));
+		write(write_fd, " ", 1);
 		i++;
 	}
 	if (flag == 0)

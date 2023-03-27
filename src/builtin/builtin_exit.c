@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 18:10:34 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 15:09:07 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	builtin_exit(t_cmd *cmd, int count, t_env *env, t_current *current)
 	if (count == 1)
 		write(1, "exit\n", 5);
 	if (cmd->option[1] == NULL)
-		exit(0);
+		exit(g_status);
 	num = ft_atoll(cmd->option[1]);
 	if (num > 2147483647 || num < -2147483648)
 		not_num(cmd->option[1], cmd, env, current);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 11:25:30 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 13:53:31 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*tmp_file_name(char *tmp_file, int num, t_env *env)
 	char	*tmp_dir;
 	char	*number;
 
-	free(tmp_file);
+	//free(tmp_file);
 	number = ft_itoa(num);
 	if (number == NULL)
 		error_malloc();
@@ -106,7 +106,7 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 				if (tmp_file == NULL)
 					error_malloc();
 				here_doc_write(cmd->file[file_count].name, tmp_file);
-				free(cmd->file[file_count].name);
+				//free(cmd->file[file_count].name);
 				cmd->file[file_count].name = tmp_file;
 			}
 			++file_count;
