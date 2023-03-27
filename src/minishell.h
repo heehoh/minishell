@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 17:21:47 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/27 11:07:33 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	error_fork(void);
 void	error_open(char *name);
 void	error_access(char *cmd);
 void	error_cmd_not_found(char *cmd);
+void	error_execve(char *cmd);
 
 #endif
