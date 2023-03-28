@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:03:32 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/27 11:32:32 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:43:27 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <unistd.h>
 #include "../../libft/libft.h"
 
-void	error_open(char *name)
+int	error_open(char *name)
 {
 	write(2, "minishell: ", 11);
 	perror(name);
-	exit(EXIT_FAILURE);
+	return (1);
 }
 
 void	error_access(char *cmd)

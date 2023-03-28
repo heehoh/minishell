@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:33:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/09 15:39:26 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:09:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	cmd_clear(t_cmd *cmd)
 		while (cmd->file[i].redirection)
 		{
 			if (cmd->file[i].redirection == 1)
-				unlink(cmd->file[i].name);
+				if (access(cmd->file[i].name, F_OK) == 0)
+					unlink(cmd->file[i].name);
 			free(cmd->file[i].name);
 			i++;
 		}
