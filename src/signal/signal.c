@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 11:16:29 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 15:51:17 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:14:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ void	handler(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-}
-
-void	heredoc_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		exit(1);
 	}
 }
 

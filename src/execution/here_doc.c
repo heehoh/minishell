@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 16:10:08 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:14:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include "../minishell.h" 
 #include <dirent.h>
 #include <signal.h>
-
-void	heredoc_handler(int signum);
 
 char	*get_tmp_dir(t_env *env)
 {
@@ -128,13 +126,16 @@ int	here_doc_fork(t_cmd *cmd, t_env *env)
 		error_fork();
 	else if (pid == 0)
 	{
-		signal(SIGINT, heredoc_handler);
+		signal(SIGINT, SIG_DFL);
 		here_doc_file(cmd, env, 1);
 		exit(0);
 	}
 	wait(&status);
 	if ((status & 0177) != 0177 && (status & 0177) != 0)
+	{
+		printf("\n");
 		return (1);
+	}
 	here_doc_file(cmd, env, 0);
 	return (0);
 }
