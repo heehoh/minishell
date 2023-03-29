@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:53:21 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 13:55:45 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 22:15:59 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ int	wait_process(int count, pid_t *pid)
 	}
 	set_signal();
 	free(pid);
-	if ((status & 0177) != 0177 && (status & 0177) != 0)
+	if(WIFSIGNALED(status))
 	{
-		status = status & 0177;
+		status = WTERMSIG(status);
 		if (status == 3)
 			write(1, "Quit: 3\n", 8);
 		else
 			write(1, "\n", 1);
 		return (status + 128);
 	}
-	else if ((status & 0177) == 0)
-		status = (status >> 8) & 0xff;
+	else if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
 	return (status);
 }

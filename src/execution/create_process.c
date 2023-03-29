@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 13:55:45 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 22:15:57 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	open_pipe(int *fd, int i)
 			close(fd[0]);
 			close(fd[1]);
 		}
-		pipe(fd);
+		if (pipe(fd) == -1)
+			error_pipe();
 	}
 	else
 	{
@@ -41,7 +42,8 @@ void	open_pipe(int *fd, int i)
 			close(fd[2]);
 			close(fd[3]);
 		}
-		pipe(fd + 2);
+		if (pipe(fd + 2) == -1)
+			error_pipe();
 	}
 }
 

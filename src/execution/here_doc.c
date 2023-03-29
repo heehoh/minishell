@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 16:03:16 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 22:13:15 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	here_doc_fork(t_cmd *cmd, t_env *env)
 		exit(0);
 	}
 	wait(&status);
-	if ((status & 0177) != 0177 && (status & 0177) != 0)
+	if (WIFSIGNALED(status))
 	{
 		printf("\n");
 		return (1);
