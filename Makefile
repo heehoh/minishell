@@ -13,6 +13,7 @@ SRCS = main.c \
 	   /execution/get_command.c \
 	   /execution/here_doc.c \
 	   /execution/process_util.c \
+	   /execution/open_file.c \
 	   /error/print_error.c \
 	   /error/print_error2.c \
 	   /error/syntax_error.c \
@@ -44,7 +45,8 @@ SRC_DIR = src
 OBJS_FILES = $(addprefix $(OBJ_DIR)/, $(OBJS))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror 
+#-g -fsanitize=address
 LFLAGS = -lft -Llibft -lreadline \
 		 -L $(HOME)/goinfre/.brew/opt/readline/lib 
 

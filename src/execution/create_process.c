@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 16:16:06 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:55:45 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,62 +23,66 @@ void	set_process(t_process *process, t_cmd *cmd, t_env *env)
 	process->count = cmd_count(cmd);
 }
 
-void	set_pid_pipe(pid_t **pid, int **fd, int count)
+void	open_pipe(int *fd, int i)
 {
-	int	i;
-
-	*pid = (pid_t *)malloc(sizeof(pid_t) * count);
-	if (*pid == NULL)
-		error_malloc();
-	if (count > 1)
+	if (i % 2 == 0)
 	{
-		*fd = (int *)malloc(sizeof(int) * (2 * (count - 1)));
-		if (*fd == NULL)
-			error_malloc();
-		i = 0;
-		while (i < count - 1)
+		if (i != 0)
 		{
-			if (pipe(*fd + (2 * i)) < 0)
-				error_pipe();
-			++i;
+			close(fd[0]);
+			close(fd[1]);
 		}
+		pipe(fd);
 	}
 	else
-		*fd = NULL;
+	{
+		if (i != 1)
+		{
+			close(fd[2]);
+			close(fd[3]);
+		}
+		pipe(fd + 2);
+	}
 }
 
 void	create_process_util(t_process *process, int *fd, int i,
-	t_current *current)
+														t_current *current)
 {
-	if (process->count == 1)
-		execute_process(process, STDIN_FILENO, STDOUT_FILENO, current);
-	else if (i == 0)
+	int	read_fd;
+	int	write_fd;
+
+	if (i % 2 == 0)
 	{
-		close_pipe(fd, process->count, STDIN_FILENO, fd[1]);
-		execute_process(process, STDIN_FILENO, fd[1], current);
-	}
-	else if (i == process->count - 1)
-	{
-		close_pipe(fd, process->count, fd[2 * (i - 1)], STDOUT_FILENO);
-		execute_process(process, fd[2 * (i - 1)], STDOUT_FILENO, current);
+		read_fd = fd[2];
+		write_fd = fd[1];
 	}
 	else
 	{
-		close_pipe(fd, process->count, fd[2 * (i - 1)], fd[2 * i + 1]);
-		execute_process(process, fd[2 * (i - 1)], fd[2 * i + 1], current);
+		read_fd = fd[0];
+		write_fd = fd[3];
 	}
+	if (i == 0)
+		read_fd = STDIN_FILENO;
+	if (i == process->count - 1)
+		write_fd = STDOUT_FILENO;
+	close_pipe(fd, process->count, read_fd, write_fd);
+	execute_process(process, read_fd, write_fd, current);
 }
 
 int	create_process_loop(t_process *process, t_current *current)
 {
 	pid_t	*pid;
-	int		*fd;
+	int		fd[4];
 	int		i;
 
-	set_pid_pipe(&pid, &fd, process->count);
-	i = 0;
-	while (i < process->count)
+	pid = (pid_t *)malloc(sizeof(pid_t) * process->count);
+	if (pid == NULL)
+		error_malloc();
+	i = -1;
+	while (++i < process->count)
 	{
+		if (i != process->count - 1)
+			open_pipe(fd, i);
 		pid[i] = fork();
 		if (pid[i] < 0)
 		{
@@ -89,10 +93,8 @@ int	create_process_loop(t_process *process, t_current *current)
 		else if (pid[i] == 0)
 			create_process_util(process, fd, i, current);
 		process->cmd = process->cmd->next;
-		++i;
 	}
 	close_pipe(fd, process->count, STDIN_FILENO, STDOUT_FILENO);
-	free(fd);
 	return (wait_process(process->count, pid));
 }
 
@@ -100,8 +102,9 @@ int	create_process(t_cmd *cmd, t_env *env, t_current *current)
 {
 	t_process	process;
 
-	set_signal_ignore();
-	here_doc_file(cmd, env);
+	signal(SIGINT, SIG_IGN);
+	if (here_doc_fork(cmd, env))
+		return (1);
 	set_process(&process, cmd, env);
 	if (process.count == 1 && cmd->option[0] != NULL
 		&& is_builtin(cmd->option[0]))

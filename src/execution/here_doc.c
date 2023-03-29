@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/27 13:53:31 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/29 15:14:25 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../../libft/libft.h"
 #include "../minishell.h" 
 #include <dirent.h>
+#include <signal.h>
 
 char	*get_tmp_dir(t_env *env)
 {
@@ -49,7 +50,6 @@ char	*tmp_file_name(char *tmp_file, int num, t_env *env)
 	char	*tmp_dir;
 	char	*number;
 
-	//free(tmp_file);
 	number = ft_itoa(num);
 	if (number == NULL)
 		error_malloc();
@@ -74,7 +74,8 @@ void	here_doc_write(char *limiter, char *tmp_file)
 	while (1)
 	{
 		str = readline("> ");
-		if (str == NULL || ft_strncmp(str, limiter, ft_strlen(str)) == 0)
+		if (str == NULL || (ft_strncmp(str, limiter, ft_strlen(limiter)) == 0
+				&& ft_strncmp(str, limiter, ft_strlen(str)) == 0))
 		{
 			free(str);
 			close(fd);
@@ -87,7 +88,7 @@ void	here_doc_write(char *limiter, char *tmp_file)
 	}
 }
 
-void	here_doc_file(t_cmd *cmd, t_env *env)
+void	here_doc_file(t_cmd *cmd, t_env *env, int is_child)
 {
 	int		cmd_count;
 	int		file_count;
@@ -103,10 +104,9 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 			if (cmd->file[file_count].redirection == 1)
 			{
 				tmp_file = tmp_file_name(tmp_file, cmd_count, env);
-				if (tmp_file == NULL)
-					error_malloc();
-				here_doc_write(cmd->file[file_count].name, tmp_file);
-				//free(cmd->file[file_count].name);
+				if (is_child == 1)
+					here_doc_write(cmd->file[file_count].name, tmp_file);
+				free(cmd->file[file_count].name);
 				cmd->file[file_count].name = tmp_file;
 			}
 			++file_count;
@@ -114,4 +114,28 @@ void	here_doc_file(t_cmd *cmd, t_env *env)
 		cmd = cmd->next;
 		++cmd_count;
 	}
+}
+
+int	here_doc_fork(t_cmd *cmd, t_env *env)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+		error_fork();
+	else if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		here_doc_file(cmd, env, 1);
+		exit(0);
+	}
+	wait(&status);
+	if ((status & 0177) != 0177 && (status & 0177) != 0)
+	{
+		printf("\n");
+		return (1);
+	}
+	here_doc_file(cmd, env, 0);
+	return (0);
 }

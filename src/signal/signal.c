@@ -6,13 +6,14 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 11:16:29 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/23 17:26:11 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:14:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <readline/readline.h>
 #include <termios.h>
+#include <stdlib.h>
 #include "../minishell.h"
 
 void	handler(int signum)
@@ -49,11 +50,5 @@ void	set_signal(void)
 {
 	set_terminal_print_off();
 	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	set_signal_ignore(void)
-{
-	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }

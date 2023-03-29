@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/27 11:07:33 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:43:41 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		syntax_error(char *input, int quote_flag, int cmd_flag);
 void	error_malloc(void);
 void	error_pipe(void);
 void	error_fork(void);
-void	error_open(char *name);
+int		error_open(char *name);
 void	error_access(char *cmd);
 void	error_cmd_not_found(char *cmd);
 void	error_execve(char *cmd);
