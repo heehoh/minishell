@@ -54,9 +54,10 @@ void	make_env(t_env *env, char *str)
 
 int	pwd(t_current *current, t_env *env, t_env *tmp, char *pwd)
 {
-	char	path[1024];
+	char		path[1024];
+	static int	flag;
 
-	if (rule_env("OLDPWD=", env) == 1)
+	if (rule_env("OLDPWD=", env) == 1 && flag++ == 0)
 		make_env(env, "OLDPWD=");
 	while (env)
 	{
@@ -86,20 +87,13 @@ int	cd_option(char *str, int i, t_env *env, t_current *current)
 	j = 0;
 	if (rule_cd(str, current->path) == 0)
 		return (1);
-	if (str[0] == '/')
-	{
-		if (chdir(str) < 0)
-			return (no_directory(str));
-		else
-			return (pwd(current, env, env, NULL));
-	}
 	while (current->path[i])
 		i++;
 	if (str[0] != '.' || (current->path[0] != '\0' && current->path[0] != '.'))
 		current->path[i++] = '/';
-	while (str[j])
+	while (str[j] && (str[0] != '.' || current->path[0] != '.'))
 		current->path[i++] = str[j++];
-	current->path[i] = str[j];
+	current->path[i] = '\0';
 	if (chdir(str) < 0)
 		return (no_directory(str));
 	else
@@ -128,7 +122,8 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 			}
 			tmp = tmp->next;
 		}
-		write (2, "minishell: cd: HOME not set", 27);
+		write (2, "minishell: cd: HOME not set\n", 28);
 		return (1);
 	}
 }
+
