@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:53:21 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/22 16:29:05 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:55:45 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,19 @@ int	cmd_count(t_cmd *cmd)
 void	close_pipe(int *fd, int process_count, int read_fd, int write_fd)
 {
 	int	i;
-	int	pipe_count;
 
 	i = 0;
-	pipe_count = (process_count - 1) * 2;
-	while (i < pipe_count)
+	if (process_count == 2)
+	{
+		while (i < 2)
+		{
+			if (fd[i] != read_fd && fd[i] != write_fd)
+				close(fd[i]);
+			++i;
+		}
+		return ;
+	}
+	while (i < 4)
 	{
 		if (fd[i] != read_fd && fd[i] != write_fd)
 			close(fd[i]);

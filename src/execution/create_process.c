@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 18:38:02 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 13:55:45 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,50 @@ void	set_process(t_process *process, t_cmd *cmd, t_env *env)
 	process->count = cmd_count(cmd);
 }
 
-void	create_process_util(t_process *process, int *fd, int i,
-	t_current *current)
+void	open_pipe(int *fd, int i)
 {
-	if (process->count == 1)
-		execute_process(process, STDIN_FILENO, STDOUT_FILENO, current);
-	else if (i == 0)
+	if (i % 2 == 0)
 	{
-		close_pipe(fd, process->count, STDIN_FILENO, fd[1]);
-		execute_process(process, STDIN_FILENO, fd[1], current);
-	}
-	else if (i == process->count - 1)
-	{
-		close_pipe(fd, process->count, fd[2 * (i - 1)], STDOUT_FILENO);
-		execute_process(process, fd[2 * (i - 1)], STDOUT_FILENO, current);
+		if (i != 0)
+		{
+			close(fd[0]);
+			close(fd[1]);
+		}
+		pipe(fd);
 	}
 	else
 	{
-		close_pipe(fd, process->count, fd[2 * (i - 1)], fd[2 * i + 1]);
-		execute_process(process, fd[2 * (i - 1)], fd[2 * i + 1], current);
+		if (i != 1)
+		{
+			close(fd[2]);
+			close(fd[3]);
+		}
+		pipe(fd + 2);
 	}
+}
+
+void	create_process_util(t_process *process, int *fd, int i,
+														t_current *current)
+{
+	int	read_fd;
+	int	write_fd;
+
+	if (i % 2 == 0)
+	{
+		read_fd = fd[2];
+		write_fd = fd[1];
+	}
+	else
+	{
+		read_fd = fd[0];
+		write_fd = fd[3];
+	}
+	if (i == 0)
+		read_fd = STDIN_FILENO;
+	if (i == process->count - 1)
+		write_fd = STDOUT_FILENO;
+	close_pipe(fd, process->count, read_fd, write_fd);
+	execute_process(process, read_fd, write_fd, current);
 }
 
 int	create_process_loop(t_process *process, t_current *current)
@@ -57,7 +81,8 @@ int	create_process_loop(t_process *process, t_current *current)
 	i = -1;
 	while (++i < process->count)
 	{
-		pipe()
+		if (i != process->count - 1)
+			open_pipe(fd, i);
 		pid[i] = fork();
 		if (pid[i] < 0)
 		{
