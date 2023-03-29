@@ -6,7 +6,7 @@
 /*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 14:01:12 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/29 15:57:04 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,12 @@
 
 int	read_env(t_env *env, int write_fd)
 {
-	int	i;
-
 	while (env)
 	{
-		i = 0;
-		while (env)
-		{
-			write(write_fd, "declare -x ", 11);
-			write(write_fd, env->var, ft_strlen(env->var));
-			write(write_fd, "\n", 1);
-			env = env->next;
-		}
+		write(write_fd, "declare -x ", 11);
+		write(write_fd, env->var, ft_strlen(env->var));
+		write(write_fd, "\n", 1);
+		env = env->next;
 	}
 	return (0);
 }

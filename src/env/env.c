@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:38:22 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/10 10:45:39 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:58:16 by migo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ t_env	*get_env_list(char **env)
 	i = 0;
 	while (env[++i])
 	{
-		node->next = get_env_list_util(env[i]);
-		node = node->next;
+		if (ft_strncmp(env[i], "OLDPWD=", 7) != 0)
+		{
+			node->next = get_env_list_util(env[i]);
+			node = node->next;
+		}
 	}
 	return (env_list);
 }
