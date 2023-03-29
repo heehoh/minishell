@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 15:14:25 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:03:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	here_doc_write(char *limiter, char *tmp_file)
 	char	*str;
 	char	*str_with_newline;
 
-	fd = open(tmp_file, O_WRONLY | O_CREAT, 0644);
+	fd = open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		error_open(tmp_file);
 	while (1)
