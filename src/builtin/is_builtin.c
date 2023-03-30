@@ -6,13 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:02:46 by migo              #+#    #+#             */
-/*   Updated: 2023/03/24 18:10:13 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:50:06 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../process.h"
-#include "../minishell.h"
 
 int	is_builtin(char *command)
 {

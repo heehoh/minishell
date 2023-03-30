@@ -6,13 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:05:58 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 17:42:02 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:52:44 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../minishell.h"
-#include <stdlib.h>
 
 void	is_cmd_or_file(char **sep_pipe, int *flag)
 {

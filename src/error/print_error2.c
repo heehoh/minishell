@@ -6,13 +6,11 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:03:32 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 14:43:27 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:50:16 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 #include "../../libft/libft.h"
 
 int	error_open(char *name)

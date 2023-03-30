@@ -6,12 +6,11 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 17:41:24 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:52:59 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>

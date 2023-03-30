@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:19:53 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 15:56:36 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/30 11:50:07 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../libft/libft.h"
 #include "../minishell.h"
 

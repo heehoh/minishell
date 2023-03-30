@@ -6,13 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:29:52 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 22:15:28 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:49:34 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "../../libft/libft.h"
 
 void	error_malloc(void)
 {

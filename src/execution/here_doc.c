@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:19:48 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 22:13:15 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:52:21 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "../../libft/libft.h"
 #include "../minishell.h" 
 #include <dirent.h>
-#include <signal.h>
 
 char	*get_tmp_dir(t_env *env)
 {

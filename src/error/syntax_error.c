@@ -6,11 +6,10 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:56:01 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/27 10:45:44 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:51:11 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "../../libft/libft.h"
 #include "error.h"
 

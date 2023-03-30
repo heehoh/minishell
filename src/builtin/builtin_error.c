@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:23:35 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/27 15:05:43 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/30 11:50:28 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "../../libft/libft.h"
 
 int	no_file_directory(char *str)

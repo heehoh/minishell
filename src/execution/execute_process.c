@@ -6,14 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:51:42 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 14:53:22 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:51:42 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../process.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include <signal.h>
 
 void	set_terminal_print_on(void);
 void	set_signal(void);
