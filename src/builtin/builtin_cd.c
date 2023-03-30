@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/30 11:50:43 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 13:40:36 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,7 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 					return (1);
 				}
 				free(str);
-				pwd(current, tmp, tmp, NULL);
-				return (0);
+				return (pwd(current, current->env, current->env, NULL));
 			}
 			tmp = tmp->next;
 		}
