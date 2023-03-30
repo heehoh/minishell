@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:25:25 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/28 14:43:41 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 09:39:52 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ extern int	g_status;
 # define FILEFLAG 1
 # define INITERR "shell-init: error retrieving current directory: \
 getcwd: cannot access parent directories"
-# define MINISHELL "\033[32mminishell$ \033[0m"
+# define MINISHELL "minishell$ "
 
 void	init_setting(char **env, t_current *current);
 t_cmd	*parse_input(char *str, t_env *env, int status);

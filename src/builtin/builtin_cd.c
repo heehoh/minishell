@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:44:28 by migo              #+#    #+#             */
-/*   Updated: 2023/03/29 15:52:34 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/30 11:40:41 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,7 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 	char	*str;
 
 	if (cmd->option[1] != NULL)
-	{
 		return (cd_option(cmd->option[1], 0, tmp, current));
-	}
 	else
 	{
 		while (tmp)
@@ -115,9 +113,13 @@ int	builtin_cd(t_cmd *cmd, t_env *tmp, t_current *current)
 			if (ft_strncmp(tmp->var, "HOME=", 5) == 0)
 			{
 				str = ft_strdup((tmp->var + 5));
-				if (chdir(str) < 0)
-					return (no_directory(str));
+				if (chdir(str) < 0 && no_directory(str))
+				{
+					free(str);
+					return (1);
+				}
 				free(str);
+				pwd(current, tmp, tmp, NULL);
 				return (0);
 			}
 			tmp = tmp->next;

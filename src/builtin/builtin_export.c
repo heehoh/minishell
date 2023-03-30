@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 20:16:07 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 15:57:04 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/30 11:38:44 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	rule_env(char *str, t_env *tmp)
 
 int	not_valid_export(char *str)
 {
-	if (str[0] == '_')
-		return (1);
 	write(2, "export: ", 8);
 	write(2, str, ft_strlen(str));
 	write(2, ": not a valid identifier\n", 25);

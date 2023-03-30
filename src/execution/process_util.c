@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:53:21 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 22:15:59 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:42:56 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	wait_process(int count, pid_t *pid)
 	}
 	set_signal();
 	free(pid);
-	if(WIFSIGNALED(status))
+	if (WIFSIGNALED(status))
 	{
 		status = WTERMSIG(status);
 		if (status == 3)
