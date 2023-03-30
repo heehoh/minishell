@@ -6,13 +6,12 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:14:51 by migo              #+#    #+#             */
-/*   Updated: 2023/03/23 17:01:31 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/30 12:49:55 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../process.h"
-#include <stdio.h>
 
 int	builtin_env(t_cmd *cmd, t_env *tmp, int write_fd)
 {

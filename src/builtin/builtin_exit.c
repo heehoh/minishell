@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migo <migo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:18:52 by migo              #+#    #+#             */
-/*   Updated: 2023/03/27 15:09:07 by migo             ###   ########.fr       */
+/*   Updated: 2023/03/30 12:49:58 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 #include "../minishell.h"
-#include <stdlib.h>
 
 void	set_terminal_print_on(void);
 void	exit_minishell(t_env *env, t_current *current, int num);
