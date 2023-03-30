@@ -13,7 +13,6 @@
 #include "../../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
-#include <stdio.h>
 
 size_t	same_env(char *str);
 int		rule_env(char *str, t_env *tmp);
