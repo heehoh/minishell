@@ -6,15 +6,13 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 17:28:20 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/24 17:32:44 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/03/31 16:55:17 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_is_space(char c)
 {
-	if (c == ' ')
-		return (1);
-	else if (c >= 9 && c <= 13)
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }
