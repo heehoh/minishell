@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 21:01:27 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/30 11:52:59 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/04/03 09:11:42 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	exit_minishell(t_env *env, t_current *current, int num)
 		env = tem;
 	}
 	set_terminal_print_on();
+	rl_clear_history();
 	exit(num);
 }
 
@@ -61,7 +62,7 @@ void	minishell_loop(t_current *current)
 		if (input == NULL)
 		{
 			write(1, "exit\n", 5);
-			exit_minishell(current->env, current, 0);
+			exit_minishell(current->env, current, g_status);
 		}
 		if (input_check(input))
 			continue ;
