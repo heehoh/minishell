@@ -6,7 +6,7 @@
 /*   By: hujeong <hujeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:30:03 by hujeong           #+#    #+#             */
-/*   Updated: 2023/03/29 22:15:57 by hujeong          ###   ########.fr       */
+/*   Updated: 2023/04/19 19:44:33 by hujeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../process.h"
 
 void	set_signal_ignore(void);
+void	set_signal(void);
 
 void	set_process(t_process *process, t_cmd *cmd, t_env *env)
 {
@@ -106,7 +107,10 @@ int	create_process(t_cmd *cmd, t_env *env, t_current *current)
 
 	signal(SIGINT, SIG_IGN);
 	if (here_doc_fork(cmd, env))
+	{
+		set_signal();
 		return (1);
+	}
 	set_process(&process, cmd, env);
 	if (process.count == 1 && cmd->option[0] != NULL
 		&& is_builtin(cmd->option[0]))
