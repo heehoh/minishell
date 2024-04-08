@@ -27,7 +27,7 @@ n1 -->|^D| n4
 - < > << >> 파일 리다이렉션 구현
 - | (pipe) 구현 이전 명령어의 출력을 다음 명령어의 입력으로 연결
 - $를 사용해서 환경변수 참조 가능
-- ^C(SIGINT), ^\(SIGQUIT) 쉘이 종료되지 않고 foreground 프로세스 종료 기능
+- ^C(SIGINT), ^\\(SIGQUIT) 쉘이 종료되지 않고 foreground 프로세스 종료 기능
 - builtin 커맨드 구현
   - echo, cd, pwd, export, unset, env, exit
     
